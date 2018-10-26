@@ -2,7 +2,9 @@ const reduceAction = (
   state = {
     text: 'hey whats up',
     list: []
-  }, action) => {
+  },
+  action
+) => {
   switch (action.type) {
     case 'CHANGE_TEXT':
       return Object.assign({}, state, { text: action.text })

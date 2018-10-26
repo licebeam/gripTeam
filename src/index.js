@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import reduceAction from './redux/reducer'
 
 const store = createStore(reduceAction)
-console.log(store.getState());
 
 ReactDOM.render(
   <Provider store={store}>

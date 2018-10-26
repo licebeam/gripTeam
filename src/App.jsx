@@ -6,13 +6,8 @@ import Main from './components/Main'
 class App extends Component {
 
   render() {
-    console.log(this.props)
     return (
       <Main />
-      // <div className="App">
-      //   {this.props.text}
-      //   <button onClick={() => this.props.changeText('yo')} />
-      // </div>
     );
   }
 }
