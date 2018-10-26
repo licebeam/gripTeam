@@ -1,18 +1,40 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 const Container = styled.div`
-  background-color: black;
+  background-color: pink;
   height: 100%;
   width: 100%;
   color: white;
-  display: flex;
-  flex-direction: column;
+  overflow: auto;
+`
+const Game = styled.div`
+  width: 100%;
+  background-color: white;
+  color: black;
+  height: 100px;
+  .game-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &:hover{
+    background-color: grey;
+  }
 `
 class CurrentRankings extends Component {
   render() {
+    const { highestRated } = this.props
     return (
       <Container>
-        <div>Game Goes Here</div>
+        {highestRated ? highestRated.map(item => {
+          return (
+            <Game image={item.image}>
+              {item.title}
+              {item.rating}
+              <img className='game-image' src={item.image} alt="" />
+            </Game>)
+        }
+        ) : null}
       </Container>
     )
   }

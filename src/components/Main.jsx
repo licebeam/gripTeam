@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import CurrentRankings from './CurrentRankings'
 import CenterList from './CenterList';
+import User from './User';
 
 const Container = styled.div`
   background-color: black;
@@ -21,15 +22,14 @@ const Header = styled.div`
 
 const Middle = styled.div`
   flex:8;
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: row;
   background-color: darkslategrey; 
   text-align: center;
   margin: 0 auto;
-  overflow: hidden;
   .current-top{
-    flex: 1;
+    flex: 2;
   }
   .current{
     flex: 4
@@ -40,6 +40,7 @@ const Middle = styled.div`
 `
 class Main extends Component {
   render() {
+    const { highestRated } = this.props
     return (
       <Container>
         <Header>
@@ -47,15 +48,13 @@ class Main extends Component {
         </Header>
         <Middle>
           <div class="current-top">
-            Current Rankings
-            <CurrentRankings />
+            <CurrentRankings highestRated={highestRated} />
           </div>
           <div class="current">
-            New Games
             <CenterList />
           </div>
           <div class="user">
-            User Profile
+            <User />
           </div>
         </Middle>
       </Container>

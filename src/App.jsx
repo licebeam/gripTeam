@@ -6,14 +6,16 @@ import Main from './components/Main'
 class App extends Component {
 
   render() {
+    const { highestRated } = this.props
     return (
-      <Main />
+      <Main highestRated={highestRated} />
     );
   }
 }
 
 const mapStateToProps = state => ({
-  text: state.text
+  text: state.text,
+  highestRated: state.highestRated
 })
 
 const mapDispatchToProps = {
