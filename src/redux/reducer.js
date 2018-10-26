@@ -1,10 +1,3 @@
-
-
-/**
-* @param {Object} state - Default application state
-* @param {Object} action - Action from action creator
-* @returns {Object} New state
-*/
 const reduceAction = (
   state = {
     text: 'hey whats up',
