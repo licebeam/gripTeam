@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import GenreList from './GenreList'
 import CenterList from './CenterList';
 import User from './User';
+import Login from './Login'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -40,24 +41,39 @@ class Main extends Component {
   render() {
     const { highestRated } = this.props
     return (
-      <Container>
-        <Header>
-          Header
+      <Router>
+        <Container>
+          <Header>
+            Header
         </Header>
-        <Route exact path="/Home" component={() => {
-          return (
-            < Middle >
-              <div class="current-top">
-                <GenreList highestRated={highestRated} />
-              </div>
-              <div class="current">
-                <CenterList />
-              </div>
-            </Middle>
-          )
-        }} />
-
-      </Container>
+          <Route exact path="/Home" component={() => {
+            return (
+              < Middle >
+                <div class="current-top">
+                  <GenreList highestRated={highestRated} />
+                </div>
+                <div class="current">
+                  <CenterList />
+                </div>
+              </Middle>
+            )
+          }} />
+          <Route exact path="/User" component={() => {
+            return (
+              <Middle>
+                <User />
+              </Middle>
+            )
+          }} />
+          <Route exact path="/Login" component={() => {
+            return (
+              <Middle>
+                <Login />
+              </Middle>
+            )
+          }} />
+        </Container>
+      </Router>
     )
   }
 }

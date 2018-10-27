@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 const Container = styled.div`
-  background-color: wheat;
+  background-color: Green;
   height: 100%;
   width: 100%;
   color: white;
@@ -12,7 +12,7 @@ class User extends Component {
   render() {
     return (
       <Container>
-        <div>Game Goes Here</div>
+        <div>User Page</div>
       </Container>
     )
   }
