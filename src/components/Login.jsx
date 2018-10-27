@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase';
+import { uiConfig } from '../firebase';
+
 const Container = styled.div`
   background-color: wheat;
   height: 100%;
@@ -13,6 +17,7 @@ class Login extends Component {
     return (
       <Container>
         <div>Login Here</div>
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
       </Container>
     )
   }
