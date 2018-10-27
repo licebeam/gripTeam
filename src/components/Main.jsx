@@ -34,9 +34,6 @@ const Middle = styled.div`
   .current{
     flex: 4
   }
-  .user{
-    flex: 2;
-  }
 `
 class Main extends Component {
   render() {
@@ -53,7 +50,6 @@ class Main extends Component {
           <div class="current">
             <CenterList />
           </div>
-
         </Middle>
       </Container>
     )

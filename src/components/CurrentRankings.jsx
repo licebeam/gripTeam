@@ -31,7 +31,6 @@ class CurrentRankings extends Component {
             <Game image={item.image}>
               {item.title}
               {item.rating}
-              <img className='game-image' src={item.image} alt="" />
             </Game>)
         }
         ) : null}
