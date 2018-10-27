@@ -6,17 +6,14 @@ const Container = styled.div`
   width: 100%;
   color: white;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 `
-const Game = styled.div`
+const Genre = styled.div`
   width: 100%;
   background-color: white;
   color: black;
   height: 100px;
-  .game-image{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
   &:hover{
     background-color: grey;
   }
@@ -28,10 +25,10 @@ class GenreList extends Component {
       <Container>
         {highestRated ? highestRated.map(item => {
           return (
-            <Game image={item.image}>
+            <Genre>
               {item.title}
               {item.rating}
-            </Game>)
+            </Genre>)
         }
         ) : null}
       </Container>

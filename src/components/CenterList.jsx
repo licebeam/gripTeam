@@ -12,7 +12,7 @@ class CenterList extends Component {
   render() {
     return (
       <Container>
-        <div>Game Goes Here</div>
+        <div>Movies will go here</div>
       </Container>
     )
   }

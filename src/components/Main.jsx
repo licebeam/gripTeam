@@ -29,7 +29,7 @@ const Middle = styled.div`
   text-align: center;
   margin: 0 auto;
   .current-top{
-    flex: 2;
+    flex: 1;
   }
   .current{
     flex: 4
