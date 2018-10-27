@@ -1,11 +1,11 @@
-Game ranking website built using
+Grip team repo?
 
 #front end 
 - react
 - redux
 - styled-components
 
-#back end
+#back end potentially
 - node 
 - express
 - mongo db 
