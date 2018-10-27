@@ -15,12 +15,11 @@ after installation is complete run ```npm run start``` to start your server.
 - styled-components
 
 #back end potentially
-- node 
-- express
-- mongo db 
+firebase for authentication 
+firebase for database
 
-#data gathering
-- cheerio
+#data
+- IMDB api 
 
 #Repo Rules
 - You must make a new branch for every pull request.
