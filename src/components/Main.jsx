@@ -46,7 +46,7 @@ class Main extends Component {
           <Header>
             Header
         </Header>
-          <Route exact path="/Home" component={() => {
+          <Route exact path="/(|Home)/" component={() => {
             return (
               < Middle >
                 <div class="current-top">
@@ -65,7 +65,7 @@ class Main extends Component {
               </Middle>
             )
           }} />
-          <Route exact path="/" component={() => {
+          <Route exact path="/Login" component={() => {
             return (
               <Middle>
                 <Login />
