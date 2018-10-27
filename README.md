@@ -1,5 +1,12 @@
 Grip team repo?
 
+#How to use this repo
+git clone https://github.com/licebeam/gripTeam.git
+
+after branch is installed
+in your command line run ```npm install``
+after installation is complete run ```npm run start``` to start your server.
+
 #front end 
 - react
 - redux
