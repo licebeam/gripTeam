@@ -1,7 +1,8 @@
 Grip team repo?
 
 #How to use this repo
-git clone https://github.com/licebeam/gripTeam.git
+
+```git clone https://github.com/licebeam/gripTeam.git```
 
 after branch is installed
 in your command line run ```npm install```
