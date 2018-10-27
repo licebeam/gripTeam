@@ -65,7 +65,7 @@ class Main extends Component {
               </Middle>
             )
           }} />
-          <Route exact path="/Login" component={() => {
+          <Route exact path="/" component={() => {
             return (
               <Middle>
                 <Login />
