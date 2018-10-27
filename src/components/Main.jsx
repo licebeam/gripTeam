@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import CurrentRankings from './CurrentRankings'
+import GenreList from './GenreList'
 import CenterList from './CenterList';
 import User from './User';
 
@@ -45,7 +45,7 @@ class Main extends Component {
         </Header>
         <Middle>
           <div class="current-top">
-            <CurrentRankings highestRated={highestRated} />
+            <GenreList highestRated={highestRated} />
           </div>
           <div class="current">
             <CenterList />

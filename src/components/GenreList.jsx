@@ -21,7 +21,7 @@ const Game = styled.div`
     background-color: grey;
   }
 `
-class CurrentRankings extends Component {
+class GenreList extends Component {
   render() {
     const { highestRated } = this.props
     return (
@@ -39,4 +39,4 @@ class CurrentRankings extends Component {
   }
 }
 
-export default CurrentRankings;
+export default GenreList;
