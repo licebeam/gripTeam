@@ -15,14 +15,14 @@ const Container = styled.div`
 const Header = styled.div`
   flex:1;
   width: 100%;
-  background-color: darkslategrey; 
+  background-color: black; 
   text-align: center;
   margin: 0 auto;
 `
 
 const Middle = styled.div`
   flex:8;
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   background-color: darkslategrey; 
@@ -53,9 +53,7 @@ class Main extends Component {
           <div class="current">
             <CenterList />
           </div>
-          <div class="user">
-            <User />
-          </div>
+
         </Middle>
       </Container>
     )
