@@ -19,7 +19,7 @@ const MovieRow = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
 `
 const Movie = styled.div`
-  margin: 0px 0px 40px 0px;
+  margin: 0px 0px 100px 0px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -38,9 +38,40 @@ const Movie = styled.div`
     object-fit: cover;
   }
     .rating{
-    height: 40px;
+    width: 80%;
     padding: 10px;
     font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    .up{
+      height: 20px;
+      flex: 1;
+      padding: 10px;
+       display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      background-color: lightblue; //THIS COLOR MUST CHANGE
+      transition: .2s all;
+       &:hover{
+        cursor: pointer;
+        background-color: green;
+      }
+    }
+    .down{
+      height: 20px;
+      padding: 10px;
+      flex: 1;
+       display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      background-color: orange; //THIS COLOR MUST CHANGE
+      transition: .2s all;
+      &:hover{
+        background-color: red;
+      }
+    }
   }
 `
 class CenterList extends Component {
@@ -72,9 +103,12 @@ class CenterList extends Component {
                   {movie.Title}
                 </div>
                 <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://images-na.ssl-images-amazon.com/images/I/11382C6KyhL._SX425_.jpg'} alt="" />
-                <div className="title">
+                <div className="rating">
+                  <div className="up">Upvote</div>
                   {movie.Rating}
+                  <div className="down">Downvote</div>
                 </div>
+
               </Movie>
             )
           }
