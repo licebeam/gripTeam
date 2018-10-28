@@ -91,12 +91,10 @@ class CenterList extends Component {
   }
 
   render() {
-    console.log('movie list', this.props.movieList)
     return (
       <Container>
         <MovieRow>
           {this.checkForMovies(this.props.movieList) ? this.props.movieList.map(movie => {
-            console.log(movie)
             return (
               <Movie>
                 <div className="title">

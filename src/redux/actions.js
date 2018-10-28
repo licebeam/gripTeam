@@ -15,9 +15,10 @@ export const setMoviesList = movies => ({
   movies,
 })
 
-export const getMovies = () => {
+export const getMovies = (searchTerm) => {
   return dispatch => {
-    fetch('https://www.omdbapi.com/?s=`batman`&page=1&type=movie&apikey=4ee98d70')
+    //DEFAULT SETS PAGE TO BATMAN
+    fetch(`https://www.omdbapi.com/?s=${searchTerm ? searchTerm : 'batman'}&page=1&type=movie&apikey=4ee98d70`)
       .then((response) => {
         if (!response.ok) {
           throw Error('could not fetch');

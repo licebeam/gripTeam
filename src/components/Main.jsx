@@ -20,6 +20,10 @@ const Header = styled.div`
   background-color: black; 
   text-align: center;
   margin: 0 auto;
+  display: flex;
+`
+const SearchBar = styled.div`
+  flex: 1;
 `
 const Middle = styled.div`
   flex:8;
@@ -37,6 +41,7 @@ const Middle = styled.div`
   }
 `
 class Main extends Component {
+  state = { searchTerm: '' };
   render() {
     const { genres, text, movieList, getMovies } = this.props
     return (
@@ -47,6 +52,18 @@ class Main extends Component {
             {/* {text}
             <button onClick={() => { this.props.changeCraig('You cannot change craig.') }} /> */}
             Header
+            <SearchBar>
+              <input type="text"
+                onChange={(e) => {
+                  this.setState({ searchTerm: e.target.value })
+                }}
+                onKeyPress={e => {
+                  if (e.key === 'Enter') {
+                    this.props.getMovies(this.state.searchTerm)
+                  }
+                }}
+              />
+            </SearchBar>
           </Header>
           <Route exact path="/(|Home)/" component={() => {
             return (
