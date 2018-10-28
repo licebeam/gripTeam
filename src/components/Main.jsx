@@ -33,12 +33,12 @@ const Middle = styled.div`
     flex: 1;
   }
   .current{
-    flex: 4
+    flex: 9
   }
 `
 class Main extends Component {
   render() {
-    const { genres, text, movieList } = this.props
+    const { genres, text, movieList, getMovies } = this.props
     return (
       <Router>
         <Container>
@@ -55,7 +55,7 @@ class Main extends Component {
                   <GenreList genres={genres} />
                 </div>
                 <div class="current">
-                  <CenterList movieList={movieList} />
+                  <CenterList movieList={movieList} getMovies={getMovies} />
                 </div>
               </Middle>
             )
