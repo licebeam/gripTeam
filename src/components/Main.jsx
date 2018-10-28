@@ -13,6 +13,16 @@ const Container = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
+  a {
+    color: white; //CHANGE COLORS
+    text-decoration: none;
+  }
+  a:hover 
+  {
+     color: orange; //CHANGE COLORS
+     text-decoration:none; 
+     cursor:pointer;  
+  }
 `
 const Header = styled.div`
   flex:1;
@@ -26,8 +36,24 @@ const SearchBar = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
-  flex-direction: column;
   padding: 20px;
+  .navigation{
+    .link{
+      flex: 1;
+      font-size: 1.4rem;
+      margin-right: 20px;
+    }
+  }
+  .eval-logo{
+    flex: 3;
+  }
+  .user-icon{
+    flex: 1;
+    .login{
+     flex: 1;
+     font-size: 1.4rem;
+    }
+  }
   input{
     margin-left: auto;
     width: 200px;
@@ -64,6 +90,14 @@ class Main extends Component {
             {/* {text}
             <button onClick={() => { this.props.changeCraig('You cannot change craig.') }} /> */}
             <SearchBar>
+              <div className="navigation">
+                <a className="link" href="/Home">Home</a>
+                <a className="link" href="/Top">Top Movies</a>
+              </div>
+              <div className="eval-logo">EVAL</div>
+              <div className="user-icon">
+                <a className="login" href="Login">Login</a>
+              </div>
               <input type="text"
                 placeholder='Search'
                 onChange={(e) => {
