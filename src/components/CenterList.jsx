@@ -9,9 +9,26 @@ const Container = styled.div`
   flex-direction: column;
 `
 class CenterList extends Component {
+
+  checkForMovies = movies => {
+    //Does movies have a length? 
+    if (movies.length) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     return (
       <Container>
+        {this.checkForMovies(this.props.movieList) ? this.props.movieList.map(movie => {
+          return (
+            <div>
+              {movie.title}
+            </div>
+          )
+        }
+        ) : null}
         <div>Movies will go here</div>
       </Container>
     )

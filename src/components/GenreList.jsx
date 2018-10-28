@@ -20,14 +20,13 @@ const Genre = styled.div`
 `
 class GenreList extends Component {
   render() {
-    const { highestRated } = this.props
+    const { genres } = this.props
     return (
       <Container>
-        {highestRated ? highestRated.map(item => {
+        {genres ? genres.map(item => {
           return (
             <Genre>
               {item.title}
-              {item.rating}
             </Genre>)
         }
         ) : null}
