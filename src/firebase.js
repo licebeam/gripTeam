@@ -3,7 +3,7 @@ import { FirebaseConfig } from './config/keys';
 
 firebase.initializeApp(FirebaseConfig);
 
-export const db = firebase.database().ref();
+export const db = firebase.firestore();
 
 
 export const uiConfig = {

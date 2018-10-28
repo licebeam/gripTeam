@@ -25,7 +25,7 @@ class GenreList extends Component {
       <Container>
         {genres ? genres.map(item => {
           return (
-            <Genre>
+            <Genre key={item.title}>
               {item.title}
             </Genre>)
         }

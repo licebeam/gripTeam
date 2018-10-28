@@ -43,6 +43,16 @@ const Movie = styled.div`
     font-size: 1rem;
     display: flex;
     flex-direction: row;
+    .current-rating{
+      flex:1;
+      height: 20px;
+      padding: 10px;
+      color: black;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      background-color: white;
+    }
     .up{
       height: 20px;
       flex: 1;
@@ -80,31 +90,39 @@ class CenterList extends Component {
     if (this.props.movieList && !this.props.movieList.length) {
       this.props.getMovies();
     }
+  }
 
+  componentDidUpdate(prevProps) {
+    console.log(this.props.movieList);
+    if (this.props.movieList.length >= 1) {
+      console.log('getting movie ranks')
+      this.checkForMovies(this.props.movieList)
+    }
   }
 
   checkForMovies = movies => {
-    if (movies && movies.length) {
-      return true;
-    }
-    return false;
+    if (movies.length) {
+      movies.map(movie => this.props.getRating(movie.Title));
+    } else
+      return console.log('no movies to check')
   }
 
   render() {
+    const { updateRating, getRating, currentRatings } = this.props
     return (
       <Container>
         <MovieRow>
-          {this.checkForMovies(this.props.movieList) ? this.props.movieList.map(movie => {
+          {this.props.movieList.length ? this.props.movieList.map(movie => {
             return (
-              <Movie>
+              <Movie key={this.props.movieList.indexOf(movie)}>
                 <div className="title">
                   {movie.Title}
                 </div>
                 <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://images-na.ssl-images-amazon.com/images/I/11382C6KyhL._SX425_.jpg'} alt="" />
                 <div className="rating">
-                  <div className="up">Upvote</div>
-                  {movie.Rating}
-                  <div className="down">Downvote</div>
+                  <div className="up" onClick={() => updateRating(movie.Title, 1)}>Upvote</div>
+                  <span className="current-rating">{currentRatings.find(rating => rating.title === movie.Name)}</span>
+                  <div className="down" onClick={() => updateRating(movie.Title, -1)}>Downvote</div>
                 </div>
 
               </Movie>

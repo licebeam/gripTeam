@@ -82,9 +82,9 @@ class Main extends Component {
   state = { searchTerm: '' };
 
   render() {
-    const { genres, text, movieList, getMovies } = this.props
+    const { genres, text, movieList, getMovies, updateRating, getRating, currentRatings } = this.props
     return (
-      <Router>
+      < Router >
         <Container>
           <Header>
             {/* example for craig about redux */}
@@ -115,11 +115,17 @@ class Main extends Component {
           <Route exact path="/(|Home)/" component={() => {
             return (
               <Middle >
-                <div class="current-top">
+                <div className="current-top">
                   <GenreList genres={genres} />
                 </div>
-                <div class="current">
-                  <CenterList movieList={movieList} getMovies={getMovies} />
+                <div className="current">
+                  <CenterList
+                    movieList={movieList}
+                    getMovies={getMovies}
+                    updateRating={updateRating}
+                    getRating={getRating}
+                    currentRatings={currentRatings}
+                  />
                 </div>
               </Middle>
             )
@@ -139,7 +145,7 @@ class Main extends Component {
             )
           }} />
         </Container>
-      </Router>
+      </Router >
     )
   }
 }
