@@ -11,7 +11,6 @@ const Container = styled.div`
 class CenterList extends Component {
 
   checkForMovies = movies => {
-    //Does movies have a length? 
     if (movies.length) {
       return true;
     }
