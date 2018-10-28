@@ -13,14 +13,7 @@ const reduceAction = (
       { title: 'Genre' },
       { title: 'Genre' },
     ],
-    movieList: [
-      { title: 'Cool Movie', rating: 100 },
-      { title: 'Bad Movie', rating: 100 },
-      { title: 'Cool Movie', rating: 100 },
-      { title: 'Cool Movie', rating: 100 },
-      { title: 'Cool Movie', rating: 100 },
-      { title: 'Cool Movie', rating: 100 },
-    ],
+    movieList: [],
   },
   action
 ) => {
@@ -29,6 +22,8 @@ const reduceAction = (
       return Object.assign({}, state, { text: action.text })
     case 'CHANGE_CRAIG':
       return Object.assign({}, state, { text: action.text })
+    case 'SET_MOVIES':
+      return Object.assign({}, state, { movieList: action.movies })
     default: return state;
   }
 };
