@@ -46,6 +46,7 @@ const SearchBar = styled.div`
   }
   .eval-logo{
     flex: 3;
+    font-size: 2rem;
   }
   .user-icon{
     flex: 1;
