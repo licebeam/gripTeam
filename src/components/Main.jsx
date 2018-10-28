@@ -43,6 +43,7 @@ class Main extends Component {
       <Router>
         <Container>
           <Header>
+            {/* example for craig about redux */}
             {/* {text}
             <button onClick={() => { this.props.changeCraig('You cannot change craig.') }} /> */}
             Header
