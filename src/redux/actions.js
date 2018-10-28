@@ -17,7 +17,7 @@ export const setMoviesList = movies => ({
 
 export const getMovies = () => {
   return dispatch => {
-    fetch('http://www.omdbapi.com/?s=`batman`&page=1&type=movie&apikey=4ee98d70')
+    fetch('https://www.omdbapi.com/?s=`batman`&page=1&type=movie&apikey=4ee98d70')
       .then((response) => {
         if (!response.ok) {
           throw Error('could not fetch');
