@@ -32,7 +32,7 @@ export const getMovies = (searchTerm) => {
         return response;
       })
       .then((response) => response.json())
-      .then((items) => dispatch(setMoviesList(items.Search)))
+      .then((items) => { dispatch(setMoviesList(items.Search)); dispatch(getRating(items.Search)) })
       .catch(() => dispatch(console.log('errors')));
   };
 }
@@ -88,7 +88,7 @@ export const getRating = (movieList) => {
         console.log(movieListToSend);
         if (movieListToSend.length === movieList.length) {
           console.log('sending')
-          dispatch(setMovieRatings(movieListToSend))
+          return dispatch(setMovieRatings(movieListToSend))
         }
       })
         .catch(function (error) {
