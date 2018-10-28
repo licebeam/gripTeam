@@ -21,7 +21,6 @@ const Header = styled.div`
   text-align: center;
   margin: 0 auto;
 `
-
 const Middle = styled.div`
   flex:8;
   width: 100%;
@@ -39,21 +38,24 @@ const Middle = styled.div`
 `
 class Main extends Component {
   render() {
-    const { highestRated } = this.props
+    const { genres, text, movieList } = this.props
     return (
       <Router>
         <Container>
           <Header>
+            {/* example for craig about redux */}
+            {/* {text}
+            <button onClick={() => { this.props.changeCraig('You cannot change craig.') }} /> */}
             Header
-        </Header>
+          </Header>
           <Route exact path="/(|Home)/" component={() => {
             return (
-              < Middle >
+              <Middle >
                 <div class="current-top">
-                  <GenreList highestRated={highestRated} />
+                  <GenreList genres={genres} />
                 </div>
                 <div class="current">
-                  <CenterList />
+                  <CenterList movieList={movieList} />
                 </div>
               </Middle>
             )

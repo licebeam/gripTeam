@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeText } from './redux/actions'
+import { changeText, changeCraig } from './redux/actions'
 import Main from './components/Main'
 
 class App extends Component {
 
   render() {
-    const { highestRated } = this.props
+    const { genres, text, changeCraig, movieList } = this.props
     return (
-      <Main highestRated={highestRated} />
+      <Main
+        genres={genres}
+        text={text}
+        changeCraig={changeCraig}
+        movieList={movieList}
+      />
     );
   }
 }
 
 const mapStateToProps = state => ({
   text: state.text,
-  highestRated: state.highestRated
+  genres: state.genres,
+  movieList: state.movieList,
 })
 
 const mapDispatchToProps = {
   changeText,
+  changeCraig,
 }
 
 export default connect(
