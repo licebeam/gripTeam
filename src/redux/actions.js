@@ -68,23 +68,33 @@ export const updateRating = (movieName, ratingChange) => {
   };
 }
 
-export const getRating = (movieName) => {
+export const getRating = (movieList) => {
   return dispatch => {
-    //get currentRating 
-    var movies = db.collection("movies").doc(`${movieName}`);
-    movies.get().then(function (doc) {
-      if (doc.exists) {
-        console.log(doc.data())
-        dispatch(setMovieRatings(doc.data()))
-      } else {
-        // doc.data() will be undefined in this case
-        return dispatch(console.log('not working'));
-        console.log("No such document!");
-        db.collection("movies").doc(`${movieName}`).set({ title: movieName, rating: 0 });
-        return dispatch(setMovieRatings(doc.data()));
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:");
-    });
+    //get currentRating
+    let movieListToSend = [];
+    const movieMap = movieList.map(movie => {
+      var movies = db.collection("movies").doc(`${movie.Title}`);
+      movies.get().then(function (doc) {
+        if (doc.exists) {
+          console.log('dispatching')
+          return movieListToSend.push(doc.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+          db.collection("movies").doc(`${movie.Title}`).set({ title: movie.Title, rating: 0 });
+          return undefined;
+        }
+      }).then(() => {
+        console.log(movieListToSend);
+        if (movieListToSend.length === movieList.length) {
+          console.log('sending')
+          dispatch(setMovieRatings(movieListToSend))
+        }
+      })
+        .catch(function (error) {
+          console.log("Error getting document:");
+        });
+    })
+
   };
 }

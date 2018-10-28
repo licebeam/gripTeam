@@ -92,27 +92,13 @@ class CenterList extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    console.log(this.props.movieList);
-    if (this.props.movieList.length >= 1) {
-      console.log('getting movie ranks')
-      this.checkForMovies(this.props.movieList)
-    }
-  }
-
-  checkForMovies = movies => {
-    if (movies.length) {
-      movies.map(movie => this.props.getRating(movie.Title));
-    } else
-      return console.log('no movies to check')
-  }
-
   render() {
     const { updateRating, getRating, currentRatings } = this.props
     return (
       <Container>
         <MovieRow>
           {this.props.movieList.length ? this.props.movieList.map(movie => {
+            const movieRating = currentRatings.find(item => item.title === movie.Title);
             return (
               <Movie key={this.props.movieList.indexOf(movie)}>
                 <div className="title">
@@ -120,9 +106,9 @@ class CenterList extends Component {
                 </div>
                 <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://images-na.ssl-images-amazon.com/images/I/11382C6KyhL._SX425_.jpg'} alt="" />
                 <div className="rating">
-                  <div className="up" onClick={() => updateRating(movie.Title, 1)}>Upvote</div>
-                  <span className="current-rating">{currentRatings.find(rating => rating.title === movie.Name)}</span>
-                  <div className="down" onClick={() => updateRating(movie.Title, -1)}>Downvote</div>
+                  <div className="up" onClick={() => { updateRating(movie.Title, 1); this.props.setLoadRatings(); }}>Upvote</div>
+                  <span className="current-rating">{movieRating ? movieRating.rating : 0}</span>
+                  <div className="down" onClick={() => { updateRating(movie.Title, -1); this.props.setLoadRatings(); }}>Downvote</div>
                 </div>
 
               </Movie>

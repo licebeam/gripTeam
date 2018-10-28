@@ -79,10 +79,30 @@ const Middle = styled.div`
   }
 `
 class Main extends Component {
-  state = { searchTerm: '' };
+  state = { searchTerm: '', loadRatings: true };
+
+  getCurrentRatings = movies => {
+    this.setState({ loadRatings: false }, () => {
+      this.props.getRating(movies);
+    })
+  }
+
+  setLoadRatings = () => { //calls database when we update ratings, be gentle with these methods.
+    this.setState({ loadRatings: true }, () => {
+      this.getCurrentRatings(this.props.movieList)
+    })
+  }
+
+  componentDidUpdate() {
+    if (this.state.loadRatings === true && this.props.movieList.length) {
+      console.log('setting')
+      this.getCurrentRatings(this.props.movieList)
+    }
+  }
 
   render() {
     const { genres, text, movieList, getMovies, updateRating, getRating, currentRatings } = this.props
+
     return (
       < Router >
         <Container>
@@ -107,6 +127,7 @@ class Main extends Component {
                 onKeyPress={e => {
                   if (e.key === 'Enter') {
                     this.props.getMovies(this.state.searchTerm)
+                    this.setLoadRatings()
                   }
                 }}
               />
@@ -125,6 +146,7 @@ class Main extends Component {
                     updateRating={updateRating}
                     getRating={getRating}
                     currentRatings={currentRatings}
+                    setLoadRatings={this.setLoadRatings}
                   />
                 </div>
               </Middle>
