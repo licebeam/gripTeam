@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { uiConfig } from '../firebase';
 
 const Container = styled.div`
-  background-color: wheat;
+  background-color: black;
   height: 100%;
   width: 100%;
   color: white;
