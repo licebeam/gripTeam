@@ -10,7 +10,7 @@ const Container = styled.div`
   background-color: black;
   height: 100vh;
   width: 100vw;
-  color: white;
+  color: green;
   display: flex;
   flex-direction: column;
   a {
@@ -27,10 +27,11 @@ const Container = styled.div`
 const Header = styled.div`
   flex:1;
   width: 100%;
-  background-color: black; 
+  background-color: #323232; 
   text-align: center;
   margin: 0 auto;
   display: flex;
+  border-bottom: 6px solid #c79843;
 `
 const SearchBar = styled.div`
   flex: 1;
@@ -46,7 +47,9 @@ const SearchBar = styled.div`
   }
   .eval-logo{
     flex: 3;
-    font-size: 2rem;
+    width: 100%;
+    height: 100%;
+    content: url('https://imgur.com/CAVcTE8');
   }
   .user-icon{
     flex: 1;
