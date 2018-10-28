@@ -47,7 +47,7 @@ const Movie = styled.div`
       height: 20px;
       flex: 1;
       padding: 10px;
-       display: flex;
+      display: flex;
       justify-content: center;
       flex-direction: column;
       text-align: center;
@@ -62,7 +62,7 @@ const Movie = styled.div`
       height: 20px;
       padding: 10px;
       flex: 1;
-       display: flex;
+      display: flex;
       justify-content: center;
       flex-direction: column;
       text-align: center;

@@ -24,6 +24,17 @@ const Header = styled.div`
 `
 const SearchBar = styled.div`
   flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  input{
+    margin-left: auto;
+    width: 200px;
+    border: none;
+    height: 30px;
+    font-size: 1.2rem;
+  }
 `
 const Middle = styled.div`
   flex:8;
@@ -42,6 +53,7 @@ const Middle = styled.div`
 `
 class Main extends Component {
   state = { searchTerm: '' };
+
   render() {
     const { genres, text, movieList, getMovies } = this.props
     return (
@@ -51,9 +63,9 @@ class Main extends Component {
             {/* example for craig about redux */}
             {/* {text}
             <button onClick={() => { this.props.changeCraig('You cannot change craig.') }} /> */}
-            Header
             <SearchBar>
               <input type="text"
+                placeholder='Search'
                 onChange={(e) => {
                   this.setState({ searchTerm: e.target.value })
                 }}
