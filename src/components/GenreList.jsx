@@ -10,7 +10,7 @@ const Container = styled.div`
   flex-direction: column;
 `
 const Genre = styled.div`
-  width: 300px;
+  width: 200px;
   margin: auto;
   background-color: #d9e4e5;
   color: black;
