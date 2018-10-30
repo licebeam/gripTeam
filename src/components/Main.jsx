@@ -65,6 +65,18 @@ const SearchBar = styled.div`
     height: 30px;
     font-size: 1.2rem;
   }
+  .user-profile-photo{
+    height: 50px;
+    width: 50px;   
+    display: flex;
+    color: white;
+    img{
+      height: 100%;
+      height: 100%;
+      border: 2px solid white;
+      border-radius: 50%;
+    }
+  }
 `
 const Middle = styled.div`
   flex:8;
@@ -83,10 +95,11 @@ const Middle = styled.div`
 `
 class Main extends Component {
   state = { searchTerm: '', loadRatings: true };
-
+  componentDidMount() {
+    this.props.logInSet()
+  }
   render() {
-    const { genres, text, movieList, getMovies, updateRating, getRating, currentRatings } = this.props
-
+    const { genres, text, movieList, getMovies, updateRating, getRating, currentRatings, user } = this.props
     return (
       < Router >
         <Container>
@@ -101,7 +114,16 @@ class Main extends Component {
               </div>
               <div className="eval-logo">EVAL</div>
               <div className="user-icon">
-                <a className="login" href="Login">Login</a>
+                {user.profilePhoto.length ? (
+                  <div className="user-profile-photo">
+                    <img src={user.profilePhoto} alt="" />
+                    <span>{user.displayName}</span>
+                  </div>
+                ) : (
+                    <a className="login" href="Login">Login</a>
+                  )
+                }
+
               </div>
               <input type="text"
                 placeholder='Search'
