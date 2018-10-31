@@ -1,5 +1,6 @@
 import ReduxThunk from 'redux-thunk'
 import { db } from '../firebase'
+import * as firebase from 'firebase';
 
 export const changeText = text => ({
   type: 'CHANGE_TEXT',
@@ -19,6 +20,12 @@ export const setMoviesList = movies => ({
 export const setMovieRatings = ratings => ({
   type: 'SET_MOVIE_RATINGS',
   ratings,
+})
+
+//USER LOGIN ACTIONS - THESE SET THE USER'S INFO FOR OUR REDUCER STATE
+export const setCurrentUser = userObject => ({
+  type: 'SET_CURRENT_USER',
+  userObject,
 })
 
 export const getMovies = (searchTerm) => {
@@ -97,4 +104,45 @@ export const getRating = (movieList) => {
     })
 
   };
+}
+
+//USER LOGS IN 
+export const logInSet = () => {
+  return dispatch => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        db.collection('users').doc(user.email)
+          .update({ userEmail: user.email })
+          .then(() => {
+            console.log('updating user')
+          })
+          .catch((error) => {
+            console.log('error, user does not exist')
+            db.collection('users').doc(user.email)
+              .set({
+                userEmail: user.email,
+              })
+              .then(() => {
+                console.log('added user to db and updating')
+              })
+              .catch((error) => {
+                console.log('error adding user')
+              })
+          })
+        console.log('user is signed in')
+        console.log(user)
+        dispatch(
+          setCurrentUser({
+            email: user.email,
+            profilePhoto: user.photoURL,
+            displayName: user.displayName,
+          }
+          ),
+        );
+      } else {
+        // User is signed out.
+      }
+    });
+  }
 }

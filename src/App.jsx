@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeText, changeCraig, getMovies, updateRating, getRating } from './redux/actions'
+import {
+  changeText,
+  changeCraig,
+  getMovies,
+  updateRating,
+  getRating,
+  logInSet,
+} from './redux/actions'
 import Main from './components/Main'
 
 class App extends Component {
@@ -14,10 +21,13 @@ class App extends Component {
       getMovies,
       updateRating,
       getRating,
-      currentRatings
+      currentRatings,
+      logInSet,
+      user,
     } = this.props
     return (
       <Main
+        user={user}
         genres={genres}
         text={text}
         changeCraig={changeCraig}
@@ -26,6 +36,7 @@ class App extends Component {
         updateRating={updateRating}
         getRating={getRating}
         currentRatings={currentRatings}
+        logInSet={logInSet}
       />
     );
   }
@@ -36,6 +47,7 @@ const mapStateToProps = state => ({
   genres: state.genres,
   movieList: state.movieList,
   currentRatings: state.currentRatings,
+  user: state.user,
 })
 
 const mapDispatchToProps = {
@@ -44,6 +56,7 @@ const mapDispatchToProps = {
   getMovies,
   updateRating,
   getRating,
+  logInSet,
 }
 
 export default connect(
