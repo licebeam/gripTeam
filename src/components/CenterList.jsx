@@ -98,17 +98,18 @@ class CenterList extends Component {
   componentDidMount() {
     if (this.props.movieList && !this.props.movieList.length) {
       this.props.getMovies();
+      this.setState({ currentPage: this.state.currentPage + 1 })
     }
     if (!this.state.stateRatings.length && this.props.currentRatings.length) {
       this.setState({ stateRatings: this.props.currentRatings })
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.searchTerm !== prevProps.searchTerm) {
       this.setState({ currentPage: 1 })
     }
-    if (!this.state.stateRatings.length && this.props.currentRatings.length) {
+    if (this.state.stateRatings.length !== this.props.currentRatings.length) {
       this.setState({ stateRatings: this.props.currentRatings })
     }
   }
@@ -136,6 +137,7 @@ class CenterList extends Component {
   }
   render() {
     const { updateRating, getRating, currentRatings, movieList } = this.props
+    console.log('currentRatings', this.state.stateRatings)
     return (
       < Container >
         {!this.props.moviesLoading ? null : (<div className='loading'>Loading...</div>)}
