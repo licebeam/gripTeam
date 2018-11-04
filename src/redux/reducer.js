@@ -37,6 +37,11 @@ const reduceAction = (
       return Object.assign({}, state, { user: action.userObject })
     case 'SET_MOVIES_LOADING':
       return Object.assign({}, state, { moviesLoading: action.loading })
+    case 'UPDATE_MOVIES':
+      return {
+        ...state,
+        movieList: [...state.movieList, ...action.movies]
+      }
     default: return state;
   }
 };

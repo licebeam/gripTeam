@@ -57,9 +57,8 @@ const SearchBar = styled.div`
 `
 
 class Header extends Component {
-  state = { searchTerm: '' }
   render() {
-    const { user, getMovies } = this.props;
+    const { user, getMovies, updateSearchTerm } = this.props;
     return (
       <HeaderContainer>
         <SearchBar>
@@ -69,7 +68,7 @@ class Header extends Component {
           </div>
           <div className="eval-logo">EVAL</div>
           <div className="user-icon">
-            {user.profilePhoto ? (
+            {user && user.profilePhoto ? (
               <div className="user-profile-photo">
                 <img src={user.profilePhoto} alt="" />
                 <span>{user.displayName}</span>
@@ -81,12 +80,12 @@ class Header extends Component {
           </div>
           <input type="text"
             placeholder='Search'
-            onChange={(e) => {
-              this.setState({ searchTerm: e.target.value })
-            }}
+            onChange={(e) =>
+              updateSearchTerm(e)
+            }
             onKeyPress={e => {
               if (e.key === 'Enter') {
-                this.props.getMovies(this.state.searchTerm)
+                this.props.getMovies(this.props.searchTerm)
               }
             }}
           />

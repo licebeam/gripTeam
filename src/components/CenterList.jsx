@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Waypoint from 'react-waypoint';
 
 const Container = styled.div`
   background-color: black;
@@ -85,12 +86,20 @@ const Movie = styled.div`
   }
 `
 class CenterList extends Component {
-  state = { stateRatings: [] };
+  state = { stateRatings: [], currentPage: 1 };
 
   componentDidMount() {
     if (this.props.movieList && !this.props.movieList.length) {
       this.props.getMovies();
     }
+  }
+
+  updatePage = () => {
+    if (this.state.currentPage !== 1) {
+      console.log('updating')
+      this.props.getMovies(this.props.searchTerm, this.state.currentPage);
+    }
+    this.setState({ currentPage: this.state.currentPage + 1 })
   }
 
   updateObjectInArray = (array, movieToUpdate) => {
@@ -116,36 +125,42 @@ class CenterList extends Component {
     }
     return (
       < Container >
-        {!this.props.moviesLoading ? (
-          <MovieRow>
-            {movieList && movieList.length ? movieList.map(movie => {
-              let movieRating = this.state.stateRatings.find(item => item.title === movie.Title);
-              console.log(movieRating)
-              return (
-                <Movie key={movieList.indexOf(movie)}>
-                  <div className="title">
-                    {movie.Title}
-                  </div>
-                  <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://images-na.ssl-images-amazon.com/images/I/11382C6KyhL._SX425_.jpg'} alt="" />
-                  <div className="rating">
-                    <div className="up"
-                      onClick={() => {
-                        updateRating(movie.Title, 1);
-                        this.updateObjectInArray(this.state.stateRatings,
-                          { rating: movieRating.rating += 1, title: movie.Title });
-                      }}>Upvote</div>
-                    <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
-                    <div className="down" onClick={() => { updateRating(movie.Title, -1); this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: movie.Title }); }}>Downvote</div>
-                  </div>
+        {!this.props.moviesLoading && movieList.length ? (
+          <div>
+            <MovieRow>
+              {movieList && movieList.length ? movieList.map(movie => {
+                let movieRating = this.state.stateRatings.find(item => item.title === movie.Title);
+                console.log(movieRating)
+                return (
+                  <Movie key={movieList.indexOf(movie)}>
+                    <div className="title">
+                      {movie.Title}
+                    </div>
+                    <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://images-na.ssl-images-amazon.com/images/I/11382C6KyhL._SX425_.jpg'} alt="" />
+                    <div className="rating">
+                      <div className="up"
+                        onClick={() => {
+                          updateRating(movie.Title, 1);
+                          this.updateObjectInArray(this.state.stateRatings,
+                            { rating: movieRating.rating += 1, title: movie.Title });
+                        }}>Upvote</div>
+                      <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
+                      <div className="down" onClick={() => { updateRating(movie.Title, -1); this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: movie.Title }); }}>Downvote</div>
+                    </div>
 
-                </Movie>
-              )
-            }
-            ) : null}
-          </MovieRow>
+                  </Movie>
+                )
+              }
+              ) : null}
+            </MovieRow>
+            <Waypoint
+              onEnter={this.updatePage}
+            >
+              <div>Hey</div>
+            </Waypoint>
+          </div>
         ) : <div className='loading'>Loading...</div> //TODO ADD SPINNER
         }
-
       </Container >
     )
   }

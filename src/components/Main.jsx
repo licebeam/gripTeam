@@ -41,7 +41,7 @@ const Middle = styled.div`
   }
 `
 class Main extends Component {
-  state = { loadRatings: true };
+  state = { loadRatings: true, searchTerm: '' };
 
   componentDidMount() {
     // TODO FIX LOGIN BUG
@@ -49,7 +49,9 @@ class Main extends Component {
       this.props.logInSet()
     }
   }
-
+  updateSearchTerm = (e) => {
+    this.setState({ searchTerm: e.target.value })
+  }
   render() {
     const {
       genres,
@@ -61,11 +63,16 @@ class Main extends Component {
       currentRatings,
       user,
       moviesLoading,
+
     } = this.props
     return (
       < Router >
         <Container>
-          <Header user={user} getMovies={getMovies} />
+          <Header
+            user={user} getMovies={getMovies}
+            updateSearchTerm={this.updateSearchTerm}
+            searchTerm={this.state.searchTerm}
+          />
           <Route exact path="/(|Home)/" component={() => {
             return (
               <Middle >
@@ -80,6 +87,7 @@ class Main extends Component {
                     getRating={getRating}
                     currentRatings={currentRatings}
                     moviesLoading={moviesLoading}
+                    searchTerm={this.state.searchTerm}
                   />
                 </div>
               </Middle>

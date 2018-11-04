@@ -12,8 +12,14 @@ export const changeCraig = text => ({
   text,
 })
 
+//THIS ACTION SETS OUR MOVIE LIST
 export const setMoviesList = movies => ({
   type: 'SET_MOVIES',
+  movies,
+})
+//THIS ACTION UPDATES OUR MOVIE LIST WITH THE NEXT PAGE
+export const updateMoviesList = movies => ({
+  type: 'UPDATE_MOVIES',
   movies,
 })
 
@@ -46,8 +52,15 @@ export const getMovies = (searchTerm, page = 1) => {
       })
       .then((response) => response.json())
       .then((items) => {
-        dispatch(setMoviesList(items.Search));
-        dispatch(getRating(items.Search));
+        if (page === 1) {
+          console.log('page is 1')
+          dispatch(setMoviesList(items.Search));
+          dispatch(getRating(items.Search));
+        } else {
+          console.log('setting')
+          dispatch(updateMoviesList(items.Search));
+          dispatch(getRating(items.Search));
+        }
       })
       .catch(() => console.log('errors'));
   };
