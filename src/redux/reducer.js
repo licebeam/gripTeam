@@ -20,7 +20,8 @@ const reduceAction = (
       email: null,
       profilePhoto: null,
       displayName: null,
-    }
+    },
+    userMovies: [],
   },
   action
 ) => {
@@ -41,6 +42,11 @@ const reduceAction = (
     // return Object.assign({}, state, { currentRatings: action.ratings })
     case 'SET_CURRENT_USER':
       return Object.assign({}, state, { user: action.userObject })
+    case 'SET_CURRENT_USER_RATINGS':
+      return {
+        ...state,
+        userMovies: [...state.userMovies, ...action.userMovies]
+      }
     case 'SET_MOVIES_LOADING':
       return Object.assign({}, state, { moviesLoading: action.loading })
     case 'UPDATE_MOVIES':

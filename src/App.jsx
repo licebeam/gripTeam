@@ -8,6 +8,7 @@ import {
   getRating,
   logInSet,
   resetMovieRatingList,
+  setUserRatings,
 } from './redux/actions'
 import Main from './components/Main'
 
@@ -25,12 +26,16 @@ class App extends Component {
       currentRatings,
       logInSet,
       user,
+      userMovies,
       moviesLoading,
       resetMovieRatingList,
+      setUserRatings,
     } = this.props
     return (
       <Main
+        setUserRatings={setUserRatings}
         user={user}
+        userMovies={userMovies}
         genres={genres}
         text={text}
         changeCraig={changeCraig}
@@ -53,6 +58,7 @@ const mapStateToProps = state => ({
   movieList: state.movieList,
   currentRatings: state.currentRatings,
   user: state.user,
+  userMovies: state.userMovies,
   moviesLoading: state.moviesLoading,
 })
 
@@ -64,6 +70,7 @@ const mapDispatchToProps = {
   getRating,
   logInSet,
   resetMovieRatingList,
+  setUserRatings,
 }
 
 export default connect(

@@ -136,8 +136,8 @@ class CenterList extends Component {
     })
   }
   render() {
-    const { updateRating, getRating, currentRatings, movieList } = this.props
-    console.log('currentRatings', this.state.stateRatings)
+    const { updateRating, getRating, currentRatings, movieList, user, userMovies, setUserRatings } = this.props
+    console.log(setUserRatings)
     return (
       < Container >
         {!this.props.moviesLoading ? null : (<div className='loading'>Loading...</div>)}
@@ -151,17 +151,27 @@ class CenterList extends Component {
                     {movie.Title}
                   </div>
                   <img src={movie.Poster !== 'N/A' ? movie.Poster : noPoster} alt="" />
-                  <div className="rating">
-                    <div className="up"
-                      onClick={() => {
-                        updateRating(movie.Title, 1);
-                        this.updateObjectInArray(this.state.stateRatings,
-                          { rating: movieRating.rating += 1, title: movie.Title });
-                      }}>Upvote</div>
-                    <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
-                    <div className="down" onClick={() => { updateRating(movie.Title, -1); this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: movie.Title }); }}>Downvote</div>
-                  </div>
-
+                  {userMovies && userMovies.includes(movie.Title) ? (
+                    <div className="rating">
+                      <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
+                    </div>
+                  ) : (
+                      <div className="rating">
+                        <div className="up"
+                          onClick={() => {
+                            updateRating(movie.Title, 1, user);
+                            this.updateObjectInArray(this.state.stateRatings,
+                              { rating: movieRating.rating += 1, title: movie.Title });
+                            setUserRatings(movie.Title);
+                          }}>Upvote</div>
+                        <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
+                        <div className="down" onClick={() => {
+                          updateRating(movie.Title, -1, user);
+                          this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: movie.Title });
+                          setUserRatings(movie.Title);
+                        }}>Downvote</div>
+                      </div>
+                    )}
                 </Movie>
               )
             }

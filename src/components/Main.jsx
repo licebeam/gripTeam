@@ -61,6 +61,8 @@ class Main extends Component {
       user,
       moviesLoading,
       resetMovieRatingList,
+      setUserRatings,
+      userMovies,
     } = this.props
     return (
       < Router>
@@ -77,6 +79,9 @@ class Main extends Component {
                   <GenreList genres={genres} />
                 </div> */}
               <CenterList
+                user={user}
+                userMovies={userMovies}
+                setUserRatings={setUserRatings}
                 movieList={movieList}
                 getMovies={getMovies}
                 updateRating={updateRating}
