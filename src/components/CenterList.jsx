@@ -6,6 +6,7 @@ const Container = styled.div`
   background-color: black;
   height: 100%;
   width: 100%;
+  margin: 0 auto;
   color: white;
   display: flex;
   flex-direction: column;
@@ -89,14 +90,26 @@ class CenterList extends Component {
   state = { stateRatings: [], currentPage: 1 };
 
   componentDidMount() {
+    console.log('WHY AM I UNMOUNTINGGG')
     if (this.props.movieList && !this.props.movieList.length) {
       this.props.getMovies();
+    }
+    if (!this.state.stateRatings.length && this.props.currentRatings.length) {
+      this.setState({ stateRatings: this.props.currentRatings })
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.searchTerm !== prevProps.searchTerm) {
+      this.setState({ currentPage: 1 })
+    }
+    if (!this.state.stateRatings.length && this.props.currentRatings.length) {
+      this.setState({ stateRatings: this.props.currentRatings })
     }
   }
 
   updatePage = () => {
     if (this.state.currentPage !== 1) {
-      console.log('updating')
       this.props.getMovies(this.props.searchTerm, this.state.currentPage);
     }
     this.setState({ currentPage: this.state.currentPage + 1 })
@@ -107,7 +120,6 @@ class CenterList extends Component {
       stateRatings:
         array.map((item) => {
           if (item !== movieToUpdate) {
-            console.log('test')
             return item
           }
           return {
@@ -119,17 +131,13 @@ class CenterList extends Component {
   }
   render() {
     const { updateRating, getRating, currentRatings, movieList } = this.props
-    if (!this.state.stateRatings.length && this.props.currentRatings.length) {
-      this.setState({ stateRatings: this.props.currentRatings })
-    }
     return (
       < Container >
         {!this.props.moviesLoading ? null : (<div className='loading'>Loading...</div>)}
-        <div>
+        <div className="test">
           <MovieRow>
             {movieList && movieList.length ? movieList.map(movie => {
               let movieRating = this.state.stateRatings.find(item => item.title === movie.Title);
-              console.log(movieRating)
               return (
                 <Movie key={movieList.indexOf(movie)}>
                   <div className="title">
@@ -155,7 +163,7 @@ class CenterList extends Component {
           <Waypoint
             onEnter={this.updatePage}
           >
-            <div>Hey</div>
+            {/* <div>Hey</div> */}
           </Waypoint>
         </div>
 

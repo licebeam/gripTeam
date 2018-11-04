@@ -115,7 +115,6 @@ export const getRating = movieList => {
           return movieListToSend.push({ title: movie.Title, rating: 0 });
         }
       }).then(() => {
-        console.log(movieListToSend);
         if (movieListToSend.length === movieList.length) {
           console.log('sending')
           return dispatch(setMovieRatings(movieListToSend))

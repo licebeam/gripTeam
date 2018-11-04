@@ -33,12 +33,6 @@ const Middle = styled.div`
   background-color: darkslategrey; 
   text-align: center;
   margin: 0 auto;
-  .current-top{
-    flex: 1;
-  }
-  .current{
-    flex: 9
-  }
 `
 class Main extends Component {
   state = { loadRatings: true, searchTerm: '' };
@@ -49,9 +43,12 @@ class Main extends Component {
       this.props.logInSet()
     }
   }
+
   updateSearchTerm = (e) => {
+    //ADD PAGE RESET
     this.setState({ searchTerm: e.target.value })
   }
+
   render() {
     const {
       genres,
@@ -66,41 +63,37 @@ class Main extends Component {
 
     } = this.props
     return (
-      < Router >
+      < Router>
         <Container>
           <Header
             user={user} getMovies={getMovies}
             updateSearchTerm={this.updateSearchTerm}
             searchTerm={this.state.searchTerm}
           />
-          <Route exact path="/(|Home)/" component={() => {
-            return (
-              <Middle >
-                <div className="current-top">
+          <Route exact path="/(|Home)/" render={() =>
+            <Middle >
+              {/* <div className="current-top">
                   <GenreList genres={genres} />
-                </div>
-                <div className="current">
-                  <CenterList
-                    movieList={movieList}
-                    getMovies={getMovies}
-                    updateRating={updateRating}
-                    getRating={getRating}
-                    currentRatings={currentRatings}
-                    moviesLoading={moviesLoading}
-                    searchTerm={this.state.searchTerm}
-                  />
-                </div>
-              </Middle>
-            )
-          }} />
-          <Route exact path="/User" component={() => {
+                </div> */}
+              <CenterList
+                movieList={movieList}
+                getMovies={getMovies}
+                updateRating={updateRating}
+                getRating={getRating}
+                currentRatings={currentRatings}
+                moviesLoading={moviesLoading}
+                searchTerm={this.state.searchTerm}
+              />
+            </Middle>
+          } />
+          <Route exact path="/User" render={() => {
             return (
               <Middle>
                 <User />
               </Middle>
             )
           }} />
-          <Route exact path="/Login" component={() => {
+          <Route exact path="/Login" render={() => {
             return (
               <Middle>
                 <Login />
