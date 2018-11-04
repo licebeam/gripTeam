@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Waypoint from 'react-waypoint';
+import noPoster from '../images/noposter.png';
 
 const Container = styled.div`
   background-color: black;
@@ -18,14 +19,19 @@ const Container = styled.div`
 `
 const MovieRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  /* this is a mobile friendly media query  */
+  /* if the screen is less the 700px wide it will inherit this style */
+   @media (max-width: 700px) {  
+     grid-template-columns: 1fr;
+  }
 `
 const Movie = styled.div`
   margin: 0px 0px 100px 0px;
   display: flex;
   flex-direction: column;
   text-align: center;
-  height: 600px;
+  height: 500px;
   align-items: center;
   .title{
     height: 40px;
@@ -33,14 +39,14 @@ const Movie = styled.div`
     font-size: 1rem;
   }
   img{
-    min-width: 400px;
-    min-height: 600px;
-    max-width: 400px;
-    max-height: 600px;
+    min-width: 300px;
+    min-height: 500px;
+    max-width: 300px;
+    max-height: 500px;
     object-fit: cover;
   }
     .rating{
-    width: 80%;
+    width: 60%;
     padding: 10px;
     font-size: 1rem;
     display: flex;
@@ -90,7 +96,6 @@ class CenterList extends Component {
   state = { stateRatings: [], currentPage: 1 };
 
   componentDidMount() {
-    console.log('WHY AM I UNMOUNTINGGG')
     if (this.props.movieList && !this.props.movieList.length) {
       this.props.getMovies();
     }
@@ -143,7 +148,7 @@ class CenterList extends Component {
                   <div className="title">
                     {movie.Title}
                   </div>
-                  <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://images-na.ssl-images-amazon.com/images/I/11382C6KyhL._SX425_.jpg'} alt="" />
+                  <img src={movie.Poster !== 'N/A' ? movie.Poster : noPoster} alt="" />
                   <div className="rating">
                     <div className="up"
                       onClick={() => {
