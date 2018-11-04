@@ -31,6 +31,8 @@ const reduceAction = (
       return Object.assign({}, state, { text: action.text })
     case 'SET_MOVIES':
       return Object.assign({}, state, { movieList: action.movies })
+    case 'RESET_RATING_LIST': //empties the rating list
+      return Object.assign({}, state, { currentRatings: [] })
     case 'SET_MOVIE_RATINGS':
       return {
         ...state,

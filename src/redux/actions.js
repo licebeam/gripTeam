@@ -33,6 +33,10 @@ export const setMoviesLoading = loading => ({
   loading
 })
 
+export const resetMovieRatingList = () => ({
+  type: 'RESET_RATING_LIST',
+})
+
 //USER LOGIN ACTIONS - THESE SET THE USER'S INFO FOR OUR REDUCER STATE
 export const setCurrentUser = userObject => ({
   type: 'SET_CURRENT_USER',

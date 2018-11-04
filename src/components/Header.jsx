@@ -58,7 +58,7 @@ const SearchBar = styled.div`
 
 class Header extends Component {
   render() {
-    const { user, getMovies, updateSearchTerm } = this.props;
+    const { user, getMovies, updateSearchTerm, resetMovieRatingList } = this.props;
     return (
       <HeaderContainer>
         <SearchBar>
@@ -85,7 +85,8 @@ class Header extends Component {
             }
             onKeyPress={e => {
               if (e.key === 'Enter') {
-                this.props.getMovies(this.props.searchTerm)
+                resetMovieRatingList();
+                this.props.getMovies(this.props.searchTerm);
               }
             }}
           />

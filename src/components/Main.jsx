@@ -60,7 +60,7 @@ class Main extends Component {
       currentRatings,
       user,
       moviesLoading,
-
+      resetMovieRatingList,
     } = this.props
     return (
       < Router>
@@ -69,6 +69,7 @@ class Main extends Component {
             user={user} getMovies={getMovies}
             updateSearchTerm={this.updateSearchTerm}
             searchTerm={this.state.searchTerm}
+            resetMovieRatingList={resetMovieRatingList}
           />
           <Route exact path="/(|Home)/" render={() =>
             <Middle >
