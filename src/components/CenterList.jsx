@@ -36,7 +36,7 @@ const Movie = styled.div`
   .title{
     height: 40px;
     padding: 10px;
-    font-size: 1rem;
+    font-size: .8rem;
   }
   img{
     min-width: 300px;
