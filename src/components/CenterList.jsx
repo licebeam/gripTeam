@@ -31,7 +31,7 @@ const Movie = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  height: 500px;
+  height: 600px;
   align-items: center;
   .title{
     height: 40px;
