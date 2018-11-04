@@ -57,9 +57,9 @@ const SearchBar = styled.div`
 `
 
 class Header extends Component {
-
+  state = { searchTerm: '' }
   render() {
-    const { user } = this.props
+    const { user, getMovies } = this.props;
     return (
       <HeaderContainer>
         <SearchBar>
@@ -78,7 +78,6 @@ class Header extends Component {
                 <a className="login" href="Login">Login</a>
               )
             }
-
           </div>
           <input type="text"
             placeholder='Search'

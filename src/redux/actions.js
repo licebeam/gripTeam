@@ -22,16 +22,22 @@ export const setMovieRatings = ratings => ({
   ratings,
 })
 
+export const setMoviesLoading = loading => ({
+  type: 'SET_MOVIES_LOADING',
+  loading
+})
+
 //USER LOGIN ACTIONS - THESE SET THE USER'S INFO FOR OUR REDUCER STATE
 export const setCurrentUser = userObject => ({
   type: 'SET_CURRENT_USER',
   userObject,
 })
 
-export const getMovies = (searchTerm) => {
+export const getMovies = (searchTerm, page = 1) => {
   return dispatch => {
+    dispatch(setMoviesLoading(true));
     //DEFAULT SETS PAGE TO BATMAN
-    fetch(`https://www.omdbapi.com/?s=${searchTerm ? searchTerm : 'batman'}&page=1&type=movie&apikey=4ee98d70`)
+    fetch(`https://www.omdbapi.com/?s=${searchTerm ? searchTerm : 'batman'}&page=${page}&type=movie&apikey=4ee98d70`)
       .then((response) => {
         if (!response.ok) {
           throw Error('could not fetch');
@@ -39,13 +45,17 @@ export const getMovies = (searchTerm) => {
         return response;
       })
       .then((response) => response.json())
-      .then((items) => { dispatch(setMoviesList(items.Search)); dispatch(getRating(items.Search)) })
-      .catch(() => dispatch(console.log('errors')));
+      .then((items) => {
+        dispatch(setMoviesList(items.Search));
+        dispatch(getRating(items.Search));
+      })
+      .catch(() => console.log('errors'));
   };
 }
 
 export const updateRating = (movieName, ratingChange) => {
   return dispatch => {
+    console.log(movieName, ratingChange)
     //THIS UPDATES RATING FOR MOVIE YOU'VE CLICKED
     //get currentRating 
     var movies = db.collection("movies").doc(`${movieName}`);
@@ -75,8 +85,9 @@ export const updateRating = (movieName, ratingChange) => {
   };
 }
 
-export const getRating = (movieList) => {
+export const getRating = movieList => {
   return dispatch => {
+    dispatch(setMoviesLoading(true));
     //get currentRating
     let movieListToSend = [];
     const movieMap = movieList.map(movie => {
@@ -89,7 +100,7 @@ export const getRating = (movieList) => {
           // doc.data() will be undefined in this case
           console.log("No such document!");
           db.collection("movies").doc(`${movie.Title}`).set({ title: movie.Title, rating: 0 });
-          return undefined;
+          return movieListToSend.push({ title: movie.Title, rating: 0 });
         }
       }).then(() => {
         console.log(movieListToSend);
@@ -97,12 +108,12 @@ export const getRating = (movieList) => {
           console.log('sending')
           return dispatch(setMovieRatings(movieListToSend))
         }
+        dispatch(setMoviesLoading(false))
       })
         .catch(function (error) {
           console.log("Error getting document:");
         });
     })
-
   };
 }
 

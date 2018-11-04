@@ -8,10 +8,6 @@ const Container = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
-  button{
-    height: 20px;
-    width: 100px;
-  }
 `
 class User extends Component {
 

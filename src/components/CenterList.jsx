@@ -110,35 +110,43 @@ class CenterList extends Component {
   }
 
   render() {
-
     const { updateRating, getRating, currentRatings, movieList } = this.props
     if (!this.state.stateRatings.length && this.props.currentRatings.length) {
       this.setState({ stateRatings: this.props.currentRatings })
     }
     return (
-      <Container>
-        <MovieRow>
-          {movieList.length ? movieList.map(movie => {
-            let movieRating = this.state.stateRatings.find(item => item.title === movie.Title);
-            return (
-              <Movie key={movieList.indexOf(movie)}>
-                <div className="title">
-                  {movie.Title}
-                </div>
-                <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://images-na.ssl-images-amazon.com/images/I/11382C6KyhL._SX425_.jpg'} alt="" />
-                <div className="rating">
-                  <div className="up" onClick={() => { updateRating(movie.Title, 1); this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating += 1, title: movie.Title }); }}>Upvote</div>
-                  <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
-                  <div className="down" onClick={() => { updateRating(movie.Title, -1); this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: movie.Title }); }}>Downvote</div>
-                </div>
+      < Container >
+        {!this.props.moviesLoading ? (
+          <MovieRow>
+            {movieList && movieList.length ? movieList.map(movie => {
+              let movieRating = this.state.stateRatings.find(item => item.title === movie.Title);
+              console.log(movieRating)
+              return (
+                <Movie key={movieList.indexOf(movie)}>
+                  <div className="title">
+                    {movie.Title}
+                  </div>
+                  <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://images-na.ssl-images-amazon.com/images/I/11382C6KyhL._SX425_.jpg'} alt="" />
+                  <div className="rating">
+                    <div className="up"
+                      onClick={() => {
+                        updateRating(movie.Title, 1);
+                        this.updateObjectInArray(this.state.stateRatings,
+                          { rating: movieRating.rating += 1, title: movie.Title });
+                      }}>Upvote</div>
+                    <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
+                    <div className="down" onClick={() => { updateRating(movie.Title, -1); this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: movie.Title }); }}>Downvote</div>
+                  </div>
 
-              </Movie>
-            )
-          }
-          ) : null}
-        </MovieRow>
-        {!this.props.movieList.length ? (<div className='loading'>Loading...</div>) : null}
-      </Container>
+                </Movie>
+              )
+            }
+            ) : null}
+          </MovieRow>
+        ) : <div className='loading'>Loading...</div> //TODO ADD SPINNER
+        }
+
+      </Container >
     )
   }
 }

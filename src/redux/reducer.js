@@ -13,12 +13,13 @@ const reduceAction = (
       { title: 'Family' },
       { title: 'Children' },
     ],
+    moviesLoading: false,
     movieList: [],
     currentRatings: [],
     user: {
-      email: '',
-      profilePhoto: '',
-      displayName: '',
+      email: null,
+      profilePhoto: null,
+      displayName: null,
     }
   },
   action
@@ -34,6 +35,8 @@ const reduceAction = (
       return Object.assign({}, state, { currentRatings: action.ratings })
     case 'SET_CURRENT_USER':
       return Object.assign({}, state, { user: action.userObject })
+    case 'SET_MOVIES_LOADING':
+      return Object.assign({}, state, { moviesLoading: action.loading })
     default: return state;
   }
 };

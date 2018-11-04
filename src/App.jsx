@@ -24,6 +24,7 @@ class App extends Component {
       currentRatings,
       logInSet,
       user,
+      moviesLoading,
     } = this.props
     return (
       <Main
@@ -37,6 +38,7 @@ class App extends Component {
         getRating={getRating}
         currentRatings={currentRatings}
         logInSet={logInSet}
+        moviesLoading={moviesLoading}
       />
     );
   }
@@ -48,6 +50,7 @@ const mapStateToProps = state => ({
   movieList: state.movieList,
   currentRatings: state.currentRatings,
   user: state.user,
+  moviesLoading: state.moviesLoading,
 })
 
 const mapDispatchToProps = {

@@ -41,22 +41,31 @@ const Middle = styled.div`
   }
 `
 class Main extends Component {
-  state = { searchTerm: '', loadRatings: true };
+  state = { loadRatings: true };
 
   componentDidMount() {
-
-    //TODO FIX LOGIN BUG
-    // if (!this.props.user.displayName.length) {
-    //   this.props.logInSet()
-    // }
+    // TODO FIX LOGIN BUG
+    if (this.props.user.email === null) {
+      this.props.logInSet()
+    }
   }
 
   render() {
-    const { genres, text, movieList, getMovies, updateRating, getRating, currentRatings, user } = this.props
+    const {
+      genres,
+      text,
+      movieList,
+      getMovies,
+      updateRating,
+      getRating,
+      currentRatings,
+      user,
+      moviesLoading,
+    } = this.props
     return (
       < Router >
         <Container>
-          <Header user={user} />
+          <Header user={user} getMovies={getMovies} />
           <Route exact path="/(|Home)/" component={() => {
             return (
               <Middle >
@@ -70,6 +79,7 @@ class Main extends Component {
                     updateRating={updateRating}
                     getRating={getRating}
                     currentRatings={currentRatings}
+                    moviesLoading={moviesLoading}
                   />
                 </div>
               </Middle>
