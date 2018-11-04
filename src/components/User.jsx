@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
 const Container = styled.div`
   background-color: black;
   height: 100%;
@@ -7,12 +8,17 @@ const Container = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
+  button{
+    height: 20px;
+    width: 100px;
+  }
 `
 class User extends Component {
+
   render() {
+    const { user } = this.props
     return (
       <Container>
-        <div>User Page</div>
       </Container>
     )
   }
