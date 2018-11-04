@@ -117,7 +117,6 @@ class CenterList extends Component {
         })
     })
   }
-
   render() {
     const { updateRating, getRating, currentRatings, movieList } = this.props
     if (!this.state.stateRatings.length && this.props.currentRatings.length) {

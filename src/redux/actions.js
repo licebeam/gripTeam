@@ -53,7 +53,6 @@ export const getMovies = (searchTerm, page = 1) => {
       .then((response) => response.json())
       .then((items) => {
         if (page === 1) {
-          console.log('page is 1')
           dispatch(setMoviesList(items.Search));
           dispatch(getRating(items.Search));
         } else {

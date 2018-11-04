@@ -63,8 +63,8 @@ class Header extends Component {
       <HeaderContainer>
         <SearchBar>
           <div className="navigation">
-            <a className="link" href="/Home">Home</a>
-            <a className="link" href="/Top">Top Movies</a>
+            {/* <a className="link" href="/Home">Home</a>
+            <a className="link" href="/Top">Top Movies</a> */}
           </div>
           <div className="eval-logo">EVAL</div>
           <div className="user-icon">
