@@ -55,13 +55,14 @@ export const getMovies = (searchTerm, page = 1) => {
         if (page === 1) {
           dispatch(setMoviesList(items.Search));
           dispatch(getRating(items.Search));
+          console.log('items', items.Search)
         } else {
-          console.log('setting')
+          console.log('items', items.Search)
           dispatch(updateMoviesList(items.Search));
           dispatch(getRating(items.Search));
         }
       })
-      .catch(() => console.log('errors'));
+      .catch((err) => console.log('errors', err));
   };
 }
 
@@ -100,10 +101,12 @@ export const updateRating = (movieName, ratingChange) => {
 export const getRating = movieList => {
   return dispatch => {
     dispatch(setMoviesLoading(true));
+    console.log('getting ratings', movieList)
     //get currentRating
     let movieListToSend = [];
     const movieMap = movieList.map(movie => {
-      var movies = db.collection("movies").doc(`${movie.Title}`);
+      let movieTitle = movie.Title.replace(/\//g, '');
+      var movies = db.collection("movies").doc(`${movieTitle}`);
       movies.get().then(function (doc) {
         if (doc.exists) {
           console.log('dispatching')
@@ -111,7 +114,7 @@ export const getRating = movieList => {
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
-          db.collection("movies").doc(`${movie.Title}`).set({ title: movie.Title, rating: 0 });
+          db.collection("movies").doc(`${movieTitle}`).set({ title: movie.Title, rating: 0 });
           return movieListToSend.push({ title: movie.Title, rating: 0 });
         }
       }).then(() => {
@@ -122,7 +125,7 @@ export const getRating = movieList => {
         dispatch(setMoviesLoading(false))
       })
         .catch(function (error) {
-          console.log("Error getting document:");
+          console.log("Error getting document:", error);
         });
     })
   };
@@ -153,7 +156,6 @@ export const logInSet = () => {
               })
           })
         console.log('user is signed in')
-        console.log(user)
         dispatch(
           setCurrentUser({
             email: user.email,
