@@ -115,7 +115,8 @@ export const getRating = movieList => {
     //get currentRating
     let movieListToSend = [];
     const movieMap = movieList.map(movie => {
-      let movieTitle = movie.Title.replace(/\//g, '');
+      const adjustedTitle = movie.Title + ' ' + movie.Year;
+      let movieTitle = adjustedTitle.replace(/\//g, '');
       var movies = db.collection("movies").doc(`${movieTitle}`);
       movies.get().then(function (doc) {
         if (doc.exists) {
@@ -123,8 +124,8 @@ export const getRating = movieList => {
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
-          db.collection("movies").doc(`${movieTitle}`).set({ title: movie.Title, rating: 0 });
-          return movieListToSend.push({ title: movie.Title, rating: 0 });
+          db.collection("movies").doc(`${movieTitle}`).set({ title: adjustedTitle, rating: 0 });
+          return movieListToSend.push({ title: adjustedTitle, rating: 0 });
         }
       }).then(() => {
         if (movieListToSend.length === movieList.length) {
@@ -190,8 +191,9 @@ export const logInSet = () => {
 export const updateUserRating = (user, movieTitle) => {
   return dispatch => {
     if (user) {
+      const adjustedTitle = movieTitle;
       // User is signed in.
-      let movieReg = movieTitle.replace(/\//g, '');
+      let movieReg = adjustedTitle.replace(/\//g, '');
       db.collection('users').doc(user.email)
         .update({ movies: firebase.firestore.FieldValue.arrayUnion(movieReg) })
         .then(() => {

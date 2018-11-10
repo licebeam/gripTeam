@@ -140,38 +140,39 @@ class CenterList extends Component {
   }
   render() {
     const { updateRating, getRating, currentRatings, movieList, user, userMovies, setUserRatings } = this.props
+    console.log(this.state.stateRatings)
     return (
       < Container >
         {!this.props.moviesLoading ? null : (<div className='loading'>Loading...</div>)}
         <div className="test">
           <MovieRow>
             {movieList && movieList.length ? movieList.map(movie => {
-              let movieRating = this.state.stateRatings.find(item => item.title === movie.Title);
               const adjustedTitle = movie.Title + ' ' + movie.Year;
+              let movieRating = this.state.stateRatings.find(item => item.title === adjustedTitle);
               return (
                 <Movie key={movieList.indexOf(movie)}>
                   <div className="title">
                     {adjustedTitle}
                   </div>
                   <img src={movie.Poster !== 'N/A' ? movie.Poster : noPoster} alt="" />
-                  {userMovies && userMovies.includes(movie.Title.replace(/\//g, '')) ? (
+                  {userMovies && userMovies.includes(adjustedTitle.replace(/\//g, '')) ? (
                     <div className="rating">
-                      <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
+                      <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
                     </div>
                   ) : (
                       <div className="rating">
                         <div className="up"
                           onClick={() => {
-                            updateRating(movie.Title, 1, user);
-                            setUserRatings([movie.Title.replace(/\//g, '')]);
+                            updateRating(adjustedTitle, 1, user);
+                            setUserRatings([adjustedTitle.replace(/\//g, '')]);
                             this.updateObjectInArray(this.state.stateRatings,
-                              { rating: movieRating.rating += 1, title: movie.Title });
+                              { rating: movieRating.rating += 1, title: adjustedTitle });
                           }}>Upvote</div>
-                        <span className="current-rating">{movieRating ? this.state.stateRatings.find(item => item.title === movie.Title).rating : 0}</span>
+                        <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
                         <div className="down" onClick={() => {
-                          updateRating(movie.Title, -1, user);
-                          this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: movie.Title });
-                          setUserRatings([movie.Title.replace(/\//g, '')]);
+                          updateRating(adjustedTitle, -1, user);
+                          this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle });
+                          setUserRatings([adjustedTitle.replace(/\//g, '')]);
                         }}>Downvote</div>
                       </div>
                     )}
