@@ -75,40 +75,6 @@ export const getMovies = (searchTerm, page = 1) => {
   };
 }
 
-export const updateRating = (movieName, ratingChange, user) => {
-  return dispatch => {
-    console.log(movieName, ratingChange)
-    //THIS UPDATES RATING FOR MOVIE YOU'VE CLICKED
-    //get currentRating  
-    let movieReg = movieName.replace(/\//g, '');
-    var movies = db.collection("movies").doc(`${movieReg}`);
-
-    movies.get().then(function (doc) {
-      if (doc.exists) {
-        const originalMovie = doc.data();
-        const updateObject = {
-          rating: originalMovie.rating += ratingChange
-        }
-        return movies.update(updateObject)
-          .then(function () {
-            console.log("Document successfully updated!");
-            dispatch(updateUserRating(user, movieReg));
-          })
-          .catch(function (error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-          });
-
-      } else {
-        console.log("No such document!");
-
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
-  };
-}
-
 export const getRating = movieList => {
   return dispatch => {
     dispatch(setMoviesLoading(true));
@@ -188,12 +154,44 @@ export const logInSet = () => {
   }
 }
 
-export const updateUserRating = (user, movieTitle) => {
+export const updateRating = (movieName, ratingChange, user, type = 'up') => {
+  return dispatch => {
+    console.log(movieName, ratingChange)
+    //THIS UPDATES RATING FOR MOVIE YOU'VE CLICKED
+    //get currentRating  
+    let movieReg = movieName.replace(/\//g, '');
+    var movies = db.collection("movies").doc(`${movieReg}`);
+
+    movies.get().then(function (doc) {
+      if (doc.exists) {
+        const originalMovie = doc.data();
+        const updateObject = {
+          rating: originalMovie.rating += ratingChange
+        }
+        return movies.update(updateObject)
+          .then(function () {
+            console.log("Document successfully updated!");
+            dispatch(updateUserRating(user, movieReg, type));
+          })
+          .catch(function (error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+          });
+      } else {
+        console.log("No such document!");
+      }
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+  };
+}
+
+export const updateUserRating = (user, movieTitle, type) => {
   return dispatch => {
     if (user) {
       const adjustedTitle = movieTitle;
       // User is signed in.
-      let movieReg = adjustedTitle.replace(/\//g, '');
+      let movieReg = { title: adjustedTitle.replace(/\//g, ''), rating: type };
       db.collection('users').doc(user.email)
         .update({ movies: firebase.firestore.FieldValue.arrayUnion(movieReg) })
         .then(() => {
