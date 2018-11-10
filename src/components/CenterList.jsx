@@ -6,6 +6,7 @@ import { Loader } from 'styled-icons/feather/Loader'
 import { ThumbsUp } from 'styled-icons/fa-regular/ThumbsUp'
 import { ThumbsDown } from 'styled-icons/fa-regular';
 
+
 const UpVote = styled(ThumbsUp)`
   color: whitesmoke;
 `
