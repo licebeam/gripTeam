@@ -167,44 +167,48 @@ class CenterList extends Component {
                     {adjustedTitle}
                   </div>
                   <img src={movie.Poster !== 'N/A' ? movie.Poster : noPoster} alt="" />
-                  {!movieToRate ? (
-                    <div className="rating">
-                      <div className="up"
-                        onClick={() => {
-                          updateRating(adjustedTitle, 1, user, 'up');
-                          setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                          this.updateObjectInArray(this.state.stateRatings,
-                            { rating: movieRating.rating += 1, title: adjustedTitle, type: 'up', });
-                        }}>Upvote</div>
-                      <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
-                      <div className="down" onClick={() => {
-                        updateRating(adjustedTitle, -1, user, 'down');
-                        this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });
-                        setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                      }}>Downvote</div>
-                    </div>
-                  ) : (
+                  {user.email ?
+                    !movieToRate ? (
                       <div className="rating">
-                        {movieToRate.type === 'down' && movieToRate.type !== 'up' || movieToRate.type === undefined ? (
-                          <div className="up"
-                            onClick={() => {
-                              updateRating(adjustedTitle, 1, user, 'up');
-                              setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                              this.updateObjectInArray(this.state.stateRatings,
-                                { rating: movieRating.rating += 1, title: adjustedTitle, type: 'up' });
-                            }}>Upvote</div>
-                        ) : null}
-                        <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
-                        {movieToRate.type === 'up' && movieToRate.type !== 'down' || movieToRate.type === undefined ? (
-                          <div className="down" onClick={() => {
-                            updateRating(adjustedTitle, -1, user, 'down');
-                            this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });
+                        <div className="up"
+                          onClick={() => {
+                            updateRating(adjustedTitle, 1, user, 'up');
                             setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                          }}>Downvote</div>
-                        ) : null}
+                            this.updateObjectInArray(this.state.stateRatings,
+                              { rating: movieRating.rating += 1, title: adjustedTitle, type: 'up', });
+                          }}>Upvote</div>
+                        <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
+                        <div className="down" onClick={() => {
+                          updateRating(adjustedTitle, -1, user, 'down');
+                          this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });
+                          setUserRatings([adjustedTitle.replace(/\//g, '')]);
+                        }}>Downvote</div>
                       </div>
-                    )
-                  }
+                    ) : (
+                        <div className="rating">
+                          {movieToRate.type === 'down' && movieToRate.type !== 'up' || movieToRate.type === undefined ? (
+                            <div className="up"
+                              onClick={() => {
+                                updateRating(adjustedTitle, 1, user, 'up');
+                                setUserRatings([adjustedTitle.replace(/\//g, '')]);
+                                this.updateObjectInArray(this.state.stateRatings,
+                                  { rating: movieRating.rating += 1, title: adjustedTitle, type: 'up' });
+                              }}>Upvote</div>
+                          ) : null}
+                          <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
+                          {movieToRate.type === 'up' && movieToRate.type !== 'down' || movieToRate.type === undefined ? (
+                            <div className="down" onClick={() => {
+                              updateRating(adjustedTitle, -1, user, 'down');
+                              this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });
+                              setUserRatings([adjustedTitle.replace(/\//g, '')]);
+                            }}>Downvote</div>
+                          ) : null}
+                        </div>
+                      )
+                    : (<div className="rating">
+                      <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
+                    </div>
+                    )}
                 </Movie>
               )
             }
