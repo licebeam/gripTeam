@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Waypoint from 'react-waypoint';
 import noPoster from '../images/noposter.png';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 const Container = styled.div`
   background-color: black;
@@ -93,7 +94,7 @@ const Movie = styled.div`
   }
 `
 class CenterList extends Component {
-  state = { stateRatings: [], currentPage: 1 };
+  state = { stateRatings: [], currentPage: 1, userRating: [] };
 
   componentDidMount() {
     if (this.props.movieList && !this.props.movieList.length) {
@@ -114,7 +115,7 @@ class CenterList extends Component {
       this.setState({ stateRatings: this.props.currentRatings })
     }
     if (this.props.userMovies !== prevProps.userMovies) {
-      console.log('updated ranks')
+      this.setState({ userRating: this.props.userMovies });
     }
   }
 
@@ -154,13 +155,18 @@ class CenterList extends Component {
     } = this.props
     return (
       < Container >
-        {!this.props.moviesLoading ? null : (<div className='loading'>Loading...</div>)}
+        {!this.props.moviesLoading && userMovies ? null : (<div className='loading'>Loading...</div>)}
         <div className="test">
           <MovieRow>
-            {movieList && movieList.length ? movieList.map(movie => {
+            {userMovies && movieList && movieList.length ? movieList.map(movie => {
+              console.log(this.props.userMovies)
               const adjustedTitle = movie.Title + ' ' + movie.Year;
               let movieRating = this.state.stateRatings.find(item => item.title === adjustedTitle);
               const movieToRate = this.state.stateRatings.reverse().find(movie => movie.title === adjustedTitle.replace(/\//g, ''));
+              const userMovieRating = this.state.userRating.reverse().find(item => item && item.title && movieToRate !== undefined ? item.title === movieToRate.title && movieToRate.rating : null);
+              let realVal = userMovieRating !== undefined ? userMovieRating : { rating: undefined }
+              const checkRatingUp = realVal.rating === 'down' && realVal.rating !== 'up' || realVal.rating === undefined;
+              const checkRatingDown = realVal.rating === 'up' && realVal.rating !== 'down' || realVal.rating === undefined;
               return (
                 <Movie key={movieList.indexOf(movie)}>
                   <div className="title">
@@ -168,7 +174,7 @@ class CenterList extends Component {
                   </div>
                   <img src={movie.Poster !== 'N/A' ? movie.Poster : noPoster} alt="" />
                   {user.email ?
-                    !movieToRate ? (
+                    !movieToRate && realVal ? (
                       <div className="rating">
                         <div className="up"
                           onClick={() => {
@@ -186,7 +192,7 @@ class CenterList extends Component {
                       </div>
                     ) : (
                         <div className="rating">
-                          {movieToRate.type === 'down' && movieToRate.type !== 'up' || movieToRate.type === undefined ? (
+                          {checkRatingUp ? (
                             <div className="up"
                               onClick={() => {
                                 updateRating(adjustedTitle, 1, user, 'up');
@@ -196,7 +202,7 @@ class CenterList extends Component {
                               }}>Upvote</div>
                           ) : null}
                           <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
-                          {movieToRate.type === 'up' && movieToRate.type !== 'down' || movieToRate.type === undefined ? (
+                          {checkRatingDown ? (
                             <div className="down" onClick={() => {
                               updateRating(adjustedTitle, -1, user, 'down');
                               this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });

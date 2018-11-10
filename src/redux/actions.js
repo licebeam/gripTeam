@@ -154,7 +154,7 @@ export const logInSet = () => {
   }
 }
 
-export const updateRating = (movieName, ratingChange, user, type = 'up') => {
+export const updateRating = (movieName, ratingChange, user, type) => {
   return dispatch => {
     console.log(movieName, ratingChange)
     //THIS UPDATES RATING FOR MOVIE YOU'VE CLICKED
@@ -192,6 +192,7 @@ export const updateUserRating = (user, movieTitle, type) => {
       const adjustedTitle = movieTitle;
       // User is signed in.
       let movieReg = { title: adjustedTitle.replace(/\//g, ''), rating: type };
+      console.log(movieReg);
       db.collection('users').doc(user.email)
         .update({ movies: firebase.firestore.FieldValue.arrayUnion(movieReg) })
         .then(() => {
