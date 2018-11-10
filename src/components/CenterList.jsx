@@ -140,7 +140,6 @@ class CenterList extends Component {
   }
   render() {
     const { updateRating, getRating, currentRatings, movieList, user, userMovies, setUserRatings } = this.props
-    console.log(userMovies)
     return (
       < Container >
         {!this.props.moviesLoading ? null : (<div className='loading'>Loading...</div>)}
@@ -148,10 +147,11 @@ class CenterList extends Component {
           <MovieRow>
             {movieList && movieList.length ? movieList.map(movie => {
               let movieRating = this.state.stateRatings.find(item => item.title === movie.Title);
+              const adjustedTitle = movie.Title + ' ' + movie.Year;
               return (
                 <Movie key={movieList.indexOf(movie)}>
                   <div className="title">
-                    {movie.Title}
+                    {adjustedTitle}
                   </div>
                   <img src={movie.Poster !== 'N/A' ? movie.Poster : noPoster} alt="" />
                   {userMovies && userMovies.includes(movie.Title.replace(/\//g, '')) ? (

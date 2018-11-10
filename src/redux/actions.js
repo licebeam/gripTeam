@@ -61,6 +61,7 @@ export const getMovies = (searchTerm, page = 1) => {
       .then((response) => response.json())
       .then((items) => {
         if (page === 1) {
+          console.log(items)
           dispatch(setMoviesList(items.Search));
           dispatch(getRating(items.Search));
           console.log('items', items.Search)
@@ -111,7 +112,6 @@ export const updateRating = (movieName, ratingChange, user) => {
 export const getRating = movieList => {
   return dispatch => {
     dispatch(setMoviesLoading(true));
-    console.log('getting ratings', movieList)
     //get currentRating
     let movieListToSend = [];
     const movieMap = movieList.map(movie => {
@@ -119,7 +119,6 @@ export const getRating = movieList => {
       var movies = db.collection("movies").doc(`${movieTitle}`);
       movies.get().then(function (doc) {
         if (doc.exists) {
-          console.log('dispatching')
           return movieListToSend.push(doc.data());
         } else {
           // doc.data() will be undefined in this case
@@ -129,7 +128,6 @@ export const getRating = movieList => {
         }
       }).then(() => {
         if (movieListToSend.length === movieList.length) {
-          console.log('sending')
           return dispatch(setMovieRatings(movieListToSend))
         }
         dispatch(setMoviesLoading(false))
@@ -165,11 +163,8 @@ export const logInSet = () => {
                 console.log('error adding user')
               })
           })
-        console.log('user is signed in')
-        console.log('updating user rating', user)
         var movies = db.collection("users").doc(`${user.email}`);
         movies.get().then(function (doc) { //gets user rated movies
-          console.log('dispatching', doc.data())
           return dispatch(
             setUserRatings(doc.data().movies),
           );
