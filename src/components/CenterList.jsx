@@ -2,8 +2,23 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Waypoint from 'react-waypoint';
 import noPoster from '../images/noposter.png';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
+import { Loader } from 'styled-icons/feather/Loader'
+import { ThumbsUp } from 'styled-icons/fa-regular/ThumbsUp'
+import { ThumbsDown } from 'styled-icons/fa-regular';
 
+const UpVote = styled(ThumbsUp)`
+  color: whitesmoke;
+`
+const DownVote = styled(ThumbsDown)`
+  color: whitesmoke;
+`
+const Spinner = styled(Loader)`
+  color: whitesmoke;
+  height: 20px;
+  width: 60px;
+  margin: 10px;
+  text-align: center;
+`
 const Container = styled.div`
   background-color: black;
   height: 100%;
@@ -56,11 +71,10 @@ const Movie = styled.div`
       flex:1;
       height: 20px;
       padding: 10px;
-      color: black;
+      color: gold;
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      background-color: white;
     }
     .up{
       height: 20px;
@@ -70,11 +84,10 @@ const Movie = styled.div`
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      background-color: lightblue; //THIS COLOR MUST CHANGE
       transition: .2s all;
        &:hover{
         cursor: pointer;
-        background-color: green;
+        background-color: blue;
       }
     }
     .down{
@@ -85,7 +98,6 @@ const Movie = styled.div`
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      background-color: orange; //THIS COLOR MUST CHANGE
       transition: .2s all;
       &:hover{
         background-color: red;
@@ -155,15 +167,14 @@ class CenterList extends Component {
     } = this.props
     return (
       < Container >
-        {!this.props.moviesLoading && userMovies ? null : (<div className='loading'>Loading...</div>)}
+        {/* {!this.props.moviesLoading && userMovies ? null : (<div className='loading'><Spinner /></div>)} */}
         <div className="test">
           <MovieRow>
             {userMovies && movieList && movieList.length ? movieList.map(movie => {
-              console.log(this.props.userMovies)
               const adjustedTitle = movie.Title + ' ' + movie.Year;
               let movieRating = this.state.stateRatings.find(item => item.title === adjustedTitle);
               const movieToRate = this.state.stateRatings.reverse().find(movie => movie.title === adjustedTitle.replace(/\//g, ''));
-              const userMovieRating = this.state.userRating.reverse().find(item => item && item.title && movieToRate !== undefined ? item.title === movieToRate.title && movieToRate.rating : null);
+              const userMovieRating = this.state.userRating.slice().reverse().find(item => item && item.title && movieToRate !== undefined ? item.title === movieToRate.title && movieToRate.rating : null);
               let realVal = userMovieRating !== undefined ? userMovieRating : { rating: undefined }
               const checkRatingUp = realVal.rating === 'down' && realVal.rating !== 'up' || realVal.rating === undefined;
               const checkRatingDown = realVal.rating === 'up' && realVal.rating !== 'down' || realVal.rating === undefined;
@@ -182,34 +193,37 @@ class CenterList extends Component {
                             setUserRatings([adjustedTitle.replace(/\//g, '')]);
                             this.updateObjectInArray(this.state.stateRatings,
                               { rating: movieRating.rating += 1, title: adjustedTitle, type: 'up', });
-                          }}>Upvote</div>
+                          }}><UpVote /></div>
                         <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
                         <div className="down" onClick={() => {
                           updateRating(adjustedTitle, -1, user, 'down');
                           this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });
                           setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                        }}>Downvote</div>
+                        }}><DownVote /></div>
                       </div>
                     ) : (
-                        <div className="rating">
-                          {checkRatingUp ? (
-                            <div className="up"
-                              onClick={() => {
-                                updateRating(adjustedTitle, 1, user, 'up');
+                        !this.props.moviesLoading ? (
+                          <div className="rating">
+                            {checkRatingUp ? (
+                              <div className="up"
+                                onClick={() => {
+                                  updateRating(adjustedTitle, 1, user, 'up');
+                                  setUserRatings([adjustedTitle.replace(/\//g, '')]);
+                                  this.updateObjectInArray(this.state.stateRatings,
+                                    { rating: movieRating.rating += 1, title: adjustedTitle, type: 'up' });
+                                }}><UpVote /></div>
+                            ) : null}
+                            <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
+                            {checkRatingDown ? (
+                              <div className="down" onClick={() => {
+                                updateRating(adjustedTitle, -1, user, 'down');
+                                this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });
                                 setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                                this.updateObjectInArray(this.state.stateRatings,
-                                  { rating: movieRating.rating += 1, title: adjustedTitle, type: 'up' });
-                              }}>Upvote</div>
-                          ) : null}
-                          <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
-                          {checkRatingDown ? (
-                            <div className="down" onClick={() => {
-                              updateRating(adjustedTitle, -1, user, 'down');
-                              this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });
-                              setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                            }}>Downvote</div>
-                          ) : null}
-                        </div>
+                              }}><DownVote /></div>
+                            ) : null}
+                          </div>
+                        )
+                          : (<div className="rating"><Spinner /></div>)
                       )
                     : (<div className="rating">
                       <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>

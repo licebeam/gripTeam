@@ -156,6 +156,7 @@ export const logInSet = () => {
 
 export const updateRating = (movieName, ratingChange, user, type) => {
   return dispatch => {
+    dispatch(setMoviesLoading(true));
     console.log(movieName, ratingChange)
     //THIS UPDATES RATING FOR MOVIE YOU'VE CLICKED
     //get currentRating  
@@ -192,26 +193,40 @@ export const updateUserRating = (user, movieTitle, type) => {
       const adjustedTitle = movieTitle;
       // User is signed in.
       let movieReg = { title: adjustedTitle.replace(/\//g, ''), rating: type };
-      console.log(movieReg);
-      db.collection('users').doc(user.email)
-        .update({ movies: firebase.firestore.FieldValue.arrayUnion(movieReg) })
-        .then(() => {
-          console.log('updating user rating', user)
-          var movies = db.collection("users").doc(`${user.email}`);
-          movies.get().then(function (doc) {
-            console.log('dispatching', doc.data())
-            return dispatch(
-              setUserRatings(doc.data().movies),
-            );
+      var movies = db.collection('users').doc(user.email);
+      movies.get().then((doc) => {
+        let filter = doc.data().movies.filter(movie => movie.title !== movieReg.title)
+        console.log(filter)
+        console.log(movieReg);
+        db.collection('users').doc(user.email)
+          .set({
+            movies: filter,
           })
-            .catch(function (error) {
-              console.log("Error getting document:", error);
-            });
-        })
-        .catch((error) => {
-          console.log('error, user does not exist')
-        })
-      console.log('updatedUser')
+          .then(() => {
+            db.collection('users').doc(user.email)
+              .update({
+                movies: firebase.firestore.FieldValue.arrayUnion(movieReg)
+              })
+            console.log('updating user rating', user)
+            var movies = db.collection("users").doc(`${user.email}`);
+            movies.get().then(function (doc) {
+              console.log('dispatching', doc.data())
+              return dispatch(
+                setUserRatings(doc.data().movies),
+                dispatch(setMoviesLoading(false))
+              );
+            })
+              .catch(function (error) {
+                console.log("Error getting document:", error);
+                dispatch(setMoviesLoading(false))
+              });
+          })
+          .catch((error) => {
+            console.log('error, user does not exist')
+            dispatch(setMoviesLoading(false))
+          })
+        console.log('updatedUser')
+      })
 
     } else {
       // User is signed out.
