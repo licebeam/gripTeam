@@ -113,7 +113,7 @@ export const logInSet = () => {
       if (user) {
         // User is signed in.
         db.collection('users').doc(user.email)
-          .update({ userEmail: user.email })
+          .update({ userEmail: user.email, movies: [{ title: 'test' }] })
           .then(() => {
             console.log('updating user')
           })
