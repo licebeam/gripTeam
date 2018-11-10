@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'
+
 
 const HeaderContainer = styled.div`
   flex:1;
@@ -63,8 +65,8 @@ class Header extends Component {
       <HeaderContainer>
         <SearchBar>
           <div className="navigation">
-            <a className="link" href="/Home">Home</a>
-            <a className="link" href="/Top">Top Movies</a>
+            <Link className="link" to="/Home">Home</Link>
+            <Link className="link" to="/Top">Top Movies</Link>
           </div>
           <div className="eval-logo">EVAL</div>
           <div className="user-icon">

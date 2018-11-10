@@ -51,7 +51,7 @@ export const getMovies = (searchTerm, page = 1) => {
   return dispatch => {
     dispatch(setMoviesLoading(true));
     //DEFAULT SETS PAGE TO BATMAN
-    fetch(`https://www.omdbapi.com/?s=${searchTerm ? searchTerm : 'ninja'}&page=${page}&type=movie&apikey=4ee98d70`)
+    fetch(`https://www.omdbapi.com/?s=${searchTerm ? searchTerm : 'godzilla'}&page=${page}&type=movie&apikey=4ee98d70`)
       .then((response) => {
         if (!response.ok) {
           throw Error('could not fetch');
