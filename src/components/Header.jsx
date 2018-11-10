@@ -13,12 +13,20 @@ const HeaderContainer = styled.div`
   border-bottom: 6px solid #c79843;
 `
 const SearchBar = styled.div`
+   @media (max-width: 700px) { 
+     height: 80px; 
+  }
   flex: 1;
   display: flex;
   justify-content: center;
   padding: 20px;
   .navigation{
     .link{
+        /* this is a mobile friendly media query  */
+  /* if the screen is less the 700px wide it will inherit this style */
+   @media (max-width: 700px) {  
+     font-size: .8rem;
+  }
       flex: 1;
       font-size: 1.4rem;
       margin-right: 20px;
@@ -45,6 +53,10 @@ const SearchBar = styled.div`
     font-size: 1.2rem;
   }
   .user-profile-photo{
+     @media (max-width: 700px) {  
+      height: 30px;
+     width: 30px; 
+  }
     height: 50px;
     width: 50px;   
     display: flex;

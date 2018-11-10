@@ -109,11 +109,18 @@ export const getRating = movieList => {
 //USER LOGS IN 
 export const logInSet = () => {
   return dispatch => {
+    var batch = db.batch();
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
         db.collection('users').doc(user.email)
-          .update({ userEmail: user.email, movies: [{ title: 'test' }] })
+          .update({
+            userEmail: user.email,
+          })
+        db.collection('users').doc(user.email)
+          .update({
+            movies: firebase.firestore.FieldValue.arrayUnion({ title: 'test' })
+          })
           .then(() => {
             console.log('updating user')
           })

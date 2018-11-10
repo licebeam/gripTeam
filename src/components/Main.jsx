@@ -5,8 +5,7 @@ import CenterList from './CenterList';
 import User from './User';
 import Login from './Login';
 import Header from './Header';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import posed, { PoseGroup } from 'react-pose';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const Container = styled.div`
   background-color: black;
@@ -35,10 +34,6 @@ const Middle = styled.div`
   text-align: center;
   margin: 0 auto;
 `
-const RouteContainer = posed.div({
-  enter: { opacity: 1, delay: 300, beforeChildren: true },
-  exit: { opacity: 0 }
-});
 class Main extends Component {
   state = { loadRatings: true, searchTerm: '' };
 
@@ -71,60 +66,47 @@ class Main extends Component {
     } = this.props
     return (
       < Router>
-        <Route
-          render={({ location }) => (
-
-            <PoseGroup>
-              <RouteContainer key={location.key}>
-                <Switch location={location}>
-
-                  <Container>
-                    <Header
-                      user={user} getMovies={getMovies}
-                      updateSearchTerm={this.updateSearchTerm}
-                      searchTerm={this.state.searchTerm}
-                      resetMovieRatingList={resetMovieRatingList}
-                    />
-                    <Route exact path="/(|Home)/" render={() =>
-                      <Middle >
-                        {/* <div className="current-top">
+        <Container>
+          <Header
+            user={user} getMovies={getMovies}
+            updateSearchTerm={this.updateSearchTerm}
+            searchTerm={this.state.searchTerm}
+            resetMovieRatingList={resetMovieRatingList}
+          />
+          <Route exact path="/(|Home)/" render={() =>
+            <Middle >
+              {/* <div className="current-top">
                   <GenreList genres={genres} />
                 </div> */}
-                        <CenterList
-                          user={user}
-                          userMovies={userMovies}
-                          setUserRatings={setUserRatings}
-                          movieList={movieList}
-                          getMovies={getMovies}
-                          updateRating={updateRating}
-                          getRating={getRating}
-                          currentRatings={currentRatings}
-                          moviesLoading={moviesLoading}
-                          searchTerm={this.state.searchTerm}
-                        />
-                      </Middle>
-                    } />
-                    <Route exact path="/User" render={() => {
-                      return (
-                        <Middle>
-                          <User />
-                        </Middle>
-                      )
-                    }} />
-                    <Route exact path="/Login" render={() => {
-                      return (
-                        <Middle>
-                          <Login />
-                        </Middle>
-                      )
-                    }} />
-                  </Container>
-
-                </Switch>
-              </RouteContainer>
-            </PoseGroup>
-          )}
-        />
+              <CenterList
+                user={user}
+                userMovies={userMovies}
+                setUserRatings={setUserRatings}
+                movieList={movieList}
+                getMovies={getMovies}
+                updateRating={updateRating}
+                getRating={getRating}
+                currentRatings={currentRatings}
+                moviesLoading={moviesLoading}
+                searchTerm={this.state.searchTerm}
+              />
+            </Middle>
+          } />
+          <Route exact path="/User" render={() => {
+            return (
+              <Middle>
+                <User />
+              </Middle>
+            )
+          }} />
+          <Route exact path="/Login" render={() => {
+            return (
+              <Middle>
+                <Login />
+              </Middle>
+            )
+          }} />
+        </Container>
       </Router >
     )
   }

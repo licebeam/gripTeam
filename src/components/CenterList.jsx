@@ -175,7 +175,7 @@ class CenterList extends Component {
               const adjustedTitle = movie.Title + ' ' + movie.Year;
               let movieRating = this.state.stateRatings.find(item => item.title === adjustedTitle);
               const movieToRate = this.state.stateRatings.reverse().find(movie => movie.title === adjustedTitle.replace(/\//g, ''));
-              const userMovieRating = this.state.userRating.slice().reverse().find(item => item && item.title && movieToRate !== undefined ? item.title === movieToRate.title && movieToRate.rating : null);
+              let userMovieRating = this.state.userRating.slice().reverse().find(item => item && item.title && movieToRate !== undefined ? item.title === movieToRate.title && movieToRate.rating : null);
               let realVal = userMovieRating !== undefined ? userMovieRating : { rating: undefined }
               const checkRatingUp = realVal.rating === 'down' && realVal.rating !== 'up' || realVal.rating === undefined;
               const checkRatingDown = realVal.rating === 'up' && realVal.rating !== 'down' || realVal.rating === undefined;
@@ -185,7 +185,7 @@ class CenterList extends Component {
                     {adjustedTitle}
                   </div>
                   <img src={movie.Poster !== 'N/A' ? movie.Poster : noPoster} alt="" />
-                  {user.email ?
+                  {user.email && userMovies.length >= 1 ?
                     !movieToRate && realVal ? (
                       <div className="rating">
                         <div className="up"
