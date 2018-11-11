@@ -107,14 +107,14 @@ const SearchBar = styled.div`
 
 class Header extends Component {
   render() {
-    const { user, getMovies, updateSearchTerm, resetMovieRatingList } = this.props;
+    const { user, getMovies, updateSearchTerm, resetMovieRatingList, moviesLoading } = this.props;
     console.log(user)
     return (
       <HeaderContainer>
         <SearchBar>
           <div className="navigation">
-            <Link className="link" to="/Home">Home</Link>
-            <Link className="link" to="/Top">Top</Link>
+            <Link className="link" onClick={(e) => moviesLoading ? e.preventDefault() : {}} to="/Home">Home</Link>
+            <Link className="link" onClick={(e) => moviesLoading ? e.preventDefault() : {}} to="/Top">Top</Link>
           </div>
           <div className="user-icon">
             {user && user.email ? (
@@ -133,7 +133,8 @@ class Header extends Component {
               updateSearchTerm(e)
             }
             onKeyPress={e => {
-              if (e.key === 'Enter') {
+
+              if (e.key === 'Enter' && (e) && !moviesLoading) {
                 this.props.history.push('/Search')
                 this.props.logInSet();
                 resetMovieRatingList();

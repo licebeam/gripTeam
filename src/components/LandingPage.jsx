@@ -11,7 +11,6 @@ const Container = styled.div`
   font-size: 2rem;
 `
 
-
 class LandingPage extends Component {
   state = { stateRatings: [], currentPage: 1, userRating: [] };
   componentDidMount() {
@@ -28,7 +27,6 @@ class LandingPage extends Component {
   }
 
   render() {
-    const { genres } = this.props
     return (
       <Container>
         <div>Welcome</div>

@@ -77,6 +77,7 @@ class Main extends Component {
             searchTerm={this.state.searchTerm}
             resetMovieRatingList={resetMovieRatingList}
             logInSet={logInSet}
+            moviesLoading={moviesLoading}
           />
           <Route exact path="/(|Home)/" render={() =>
             <Middle >
