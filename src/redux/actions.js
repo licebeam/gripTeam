@@ -80,11 +80,10 @@ export const getMovies = (searchTerm, page = 1, loading) => {
 
 export const getTopRated = () => {
   return dispatch => {
-    console.log('fetching top rated')
     const clear = []
     dispatch(setMoviesList(clear));
     dispatch(setMoviesLoading(true));
-    var allMovies = db.collection("movies").orderBy("rating").where("rating", ">=", 1).limit(20);
+    var allMovies = db.collection("movies").orderBy("rating").where("rating", ">=", 1);
     allMovies.get().then(function (doc) {
       let movies = [];
       doc.docs.forEach((doc) => {
@@ -92,9 +91,9 @@ export const getTopRated = () => {
       });
       return movies;
     }).then((movies) => {
-      console.log(movies)
       let sorted = movies.sort((a, b) => a.rating - b.rating);
       sorted = sorted.reverse()
+      sorted.length = 20;
       dispatch(setMoviesList(sorted));
       dispatch(getRating(sorted));
       dispatch(setMoviesLoading(false))
