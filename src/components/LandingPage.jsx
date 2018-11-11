@@ -8,6 +8,7 @@ const Container = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  font-size: 2rem;
 `
 
 
@@ -31,6 +32,10 @@ class LandingPage extends Component {
     return (
       <Container>
         <div>Welcome</div>
+
+        <div>This website is in alpha stages</div>
+
+        <div>Please Log in to begin voting, or view the top rated movies so far!</div>
       </Container>
     )
   }
