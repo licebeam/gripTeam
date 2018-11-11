@@ -116,9 +116,11 @@ class Header extends Component {
             <Link className="link" to="/Top">Top</Link>
           </div>
           <div className="user-icon">
-            {user && user.profilePhoto ? (
+            {user ? (
               <div className="user-profile-photo">
-                <img src={user.profilePhoto} alt="" />
+                {user.profilePhoto ? (
+                  <img src={user.profilePhoto} alt="" />
+                ) : (<LoginIcon />)}
               </div>
             ) : (<Link className="login" to="/Login"><LoginIcon />Log In</Link>)
             }
