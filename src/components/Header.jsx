@@ -108,6 +108,7 @@ const SearchBar = styled.div`
 class Header extends Component {
   render() {
     const { user, getMovies, updateSearchTerm, resetMovieRatingList } = this.props;
+    console.log(user)
     return (
       <HeaderContainer>
         <SearchBar>
@@ -116,7 +117,7 @@ class Header extends Component {
             <Link className="link" to="/Top">Top</Link>
           </div>
           <div className="user-icon">
-            {user ? (
+            {user && user.email ? (
               <div className="user-profile-photo">
                 {user.profilePhoto ? (
                   <img src={user.profilePhoto} alt="" />
