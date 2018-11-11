@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'
+import { Loader } from 'styled-icons/feather/Loader'
+import { User } from 'styled-icons/fa-solid/User'
 
+
+const LoginIcon = styled(User)`
+  color: whitesmoke;
+`
+const Spinner = styled(Loader)`
+  color: whitesmoke;
+  height: 20px;
+  width: 60px;
+  margin: 10px;
+  text-align: center;
+`
 
 const HeaderContainer = styled.div`
   flex:1;
@@ -43,7 +56,11 @@ const SearchBar = styled.div`
         margin-right: 20px;
   }
   .login{
-    font-size: 1.4rem;
+     @media (max-width: 700px) {  
+     font-size: .8rem;
+  }
+    font-size: 1rem;
+    text-align: center;
   }
   input{
     flex: 1;
@@ -102,13 +119,10 @@ class Header extends Component {
               <div className="user-profile-photo">
                 <img src={user.profilePhoto} alt="" />
               </div>
-            ) : null
+            ) : (<Link className="login" to="/Login"><LoginIcon />Log In</Link>)
             }
           </div>
-          {!user && !user.profilePhoto ? (
-            <Link className="login" to="/Login">Log In</Link>
-          ) : null
-          }
+
           <input type="text"
             placeholder='Search'
             onChange={(e) =>
