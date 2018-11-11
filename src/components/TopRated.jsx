@@ -26,7 +26,6 @@ const Container = styled.div`
   .loading{
     height: 100%;
     width: 100%;
-    position: fixed;
     justify-content: center;
     background-color: black;
     opacity: 0.8;
