@@ -25,7 +25,6 @@ const Container = styled.div`
   .loading{
     height: 100%;
     width: 100%;
-    position: fixed;
     justify-content: center;
     background-color: black;
     opacity: 0.5;
@@ -140,12 +139,10 @@ class CenterList extends Component {
   }
 
   updatePage = () => {
-    if (!this.props.moviesLoading) {
-      if (this.state.currentPage !== 1) {
-        this.props.getMovies(this.props.searchTerm, this.state.currentPage);
-      }
-      this.setState({ currentPage: this.state.currentPage + 1 })
+    if (this.state.currentPage !== 1) {
+      this.props.getMovies(this.props.searchTerm, this.state.currentPage);
     }
+    this.setState({ currentPage: this.state.currentPage + 1 })
   }
 
   updateObjectInArray = (array, movieToUpdate) => {
@@ -234,13 +231,10 @@ class CenterList extends Component {
             }
             ) : null}
           </MovieRow>
-          {this.props.moviesLoading ? (<SelfBuildingSquareSpinner />) : (
-            <Waypoint
-              onEnter={this.updatePage}
-            >
-              {/* <div>Hey</div> */}
-            </Waypoint>
-          )}
+          <Waypoint
+            onEnter={this.updatePage}
+          >
+          </Waypoint>
         </div>
 
       </Container >
