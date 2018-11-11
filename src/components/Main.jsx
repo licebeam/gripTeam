@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import GenreList from './GenreList'
+import LandingPage from './LandingPage'
 import CenterList from './CenterList';
 import TopRated from './TopRated';
 import User from './User';
@@ -76,7 +77,14 @@ class Main extends Component {
             searchTerm={this.state.searchTerm}
             resetMovieRatingList={resetMovieRatingList}
           />
-          <Route exact path="/(|Home)/" render={() =>
+          <Route exact path="/(|Land)/" render={() =>
+            <Middle >
+              <LandingPage
+                user={user}
+              />
+            </Middle>
+          } />
+          <Route exact path="/Home" render={() =>
             <Middle >
               {/* <div className="current-top">
                   <GenreList genres={genres} />
