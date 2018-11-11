@@ -77,14 +77,24 @@ class Main extends Component {
             searchTerm={this.state.searchTerm}
             resetMovieRatingList={resetMovieRatingList}
           />
-          <Route exact path="/(|Land)/" render={() =>
+          <Route exact path="/(|Home)/" render={() =>
             <Middle >
               <LandingPage
                 user={user}
+                userMovies={userMovies}
+                setUserRatings={setUserRatings}
+                movieList={movieList}
+                getMovies={getMovies}
+                updateRating={updateRating}
+                getRating={getRating}
+                currentRatings={currentRatings}
+                moviesLoading={moviesLoading}
+                searchTerm={this.state.searchTerm}
+                logInSet={logInSet} //check for page mount reset loaded user
               />
             </Middle>
           } />
-          <Route exact path="/Home" render={() =>
+          <Route exact path="/Search" render={() =>
             <Middle >
               {/* <div className="current-top">
                   <GenreList genres={genres} />

@@ -133,7 +133,7 @@ class Header extends Component {
             }
             onKeyPress={e => {
               if (e.key === 'Enter') {
-                this.props.history.push('/Home')
+                this.props.history.push('/Search')
                 resetMovieRatingList();
                 this.props.getMovies(this.props.searchTerm);
               }
