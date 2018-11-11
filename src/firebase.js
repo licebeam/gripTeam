@@ -8,7 +8,7 @@ export const db = firebase.firestore();
 
 export const uiConfig = {
   signInFlow: 'popup',
-  signInSuccessUrl: '/Land',
+  signInSuccessUrl: '/Home',
   signInOptions: [
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
