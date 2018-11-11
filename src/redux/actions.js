@@ -47,7 +47,7 @@ export const setUserRatings = userMovies => ({
   userMovies,
 })
 
-export const getMovies = (searchTerm, page = 1) => {
+export const getMovies = (searchTerm, page = 1, loading) => {
   return dispatch => {
     dispatch(setMoviesLoading(true));
     //DEFAULT SETS PAGE TO BATMAN
@@ -71,7 +71,7 @@ export const getMovies = (searchTerm, page = 1) => {
           dispatch(getRating(items.Search));
         }
       })
-      .catch((err) => console.log('errors', err));
+      .catch((err) => { console.log('errors', err); dispatch(setMoviesLoading(false)); });
   };
 }
 

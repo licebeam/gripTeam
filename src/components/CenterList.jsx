@@ -134,10 +134,12 @@ class CenterList extends Component {
   }
 
   updatePage = () => {
-    if (this.state.currentPage !== 1) {
-      this.props.getMovies(this.props.searchTerm, this.state.currentPage);
+    if (!this.props.moviesLoading) {
+      if (this.state.currentPage !== 1) {
+        this.props.getMovies(this.props.searchTerm, this.state.currentPage);
+      }
+      this.setState({ currentPage: this.state.currentPage + 1 })
     }
-    this.setState({ currentPage: this.state.currentPage + 1 })
   }
 
   updateObjectInArray = (array, movieToUpdate) => {
@@ -167,6 +169,7 @@ class CenterList extends Component {
       userMovies,
       setUserRatings
     } = this.props
+    console.log(this.props.moviesLoading)
     return (
       < Container >
         {/* {!this.props.moviesLoading && userMovies ? null : (<div className='loading'><Spinner /></div>)} */}
@@ -237,11 +240,13 @@ class CenterList extends Component {
             }
             ) : null}
           </MovieRow>
-          <Waypoint
-            onEnter={this.updatePage}
-          >
-            {/* <div>Hey</div> */}
-          </Waypoint>
+          {this.props.moviesLoading ? (<Spinner />) : (
+            <Waypoint
+              onEnter={this.updatePage}
+            >
+              {/* <div>Hey</div> */}
+            </Waypoint>
+          )}
         </div>
 
       </Container >
