@@ -49,8 +49,6 @@ export const setUserRatings = userMovies => ({
 
 export const getMovies = (searchTerm, page = 1, loading) => {
   return dispatch => {
-    const clear = []
-    dispatch(setMoviesList(clear));
     dispatch(setMoviesLoading(true));
     //DEFAULT SETS PAGE TO BATMAN
     fetch(`https://www.omdbapi.com/?s=${searchTerm ? searchTerm : 'godzilla'}&page=${page}&type=movie&apikey=4ee98d70`)
@@ -64,6 +62,8 @@ export const getMovies = (searchTerm, page = 1, loading) => {
       .then((items) => {
         if (page === 1) {
           console.log(items)
+          const clear = []
+          dispatch(setMoviesList(clear));
           dispatch(setMoviesList(items.Search));
           dispatch(getRating(items.Search));
           console.log('items', items.Search)
