@@ -106,17 +106,16 @@ const Movie = styled.div`
     }
   }
 `
-class CenterList extends Component {
+class TopRated extends Component {
   state = { stateRatings: [], currentPage: 1, userRating: [] };
 
   componentDidMount() {
     if (this.props.movieList && !this.props.movieList.length) {
-      this.props.getMovies();
       this.setState({ currentPage: this.state.currentPage + 1 })
     }
     if (!this.state.stateRatings.length && this.props.currentRatings.length) {
       this.setState({ stateRatings: this.props.currentRatings })
-      this.props.getMovies();
+      this.props.getTopRated()
       this.props.logInSet()//resets user;
       console.log('current', this.props.currentRatings)
     }
@@ -134,14 +133,14 @@ class CenterList extends Component {
     }
   }
 
-  updatePage = () => {
-    if (!this.props.moviesLoading) {
-      if (this.state.currentPage !== 1) {
-        this.props.getMovies(this.props.searchTerm, this.state.currentPage);
-      }
-      this.setState({ currentPage: this.state.currentPage + 1 })
-    }
-  }
+  // updatePage = () => {
+  //   if (!this.props.moviesLoading) {
+  //     if (this.state.currentPage !== 1) {
+  //       this.props.getMovies(this.props.searchTerm, this.state.currentPage);
+  //     }
+  //     this.setState({ currentPage: this.state.currentPage + 1 })
+  //   }
+  // }
 
   updateObjectInArray = (array, movieToUpdate) => {
     console.log('testing ', movieToUpdate)
@@ -177,7 +176,7 @@ class CenterList extends Component {
         <div className="test">
           <MovieRow>
             {userMovies && movieList && movieList.length ? movieList.map(movie => {
-              const adjustedTitle = movie.Title + ' ' + movie.Year;
+              const adjustedTitle = movie.title || movie.Title + ' ' + movie.Year;
               let movieRating = this.state.stateRatings.find(item => item.title === adjustedTitle);
               const movieToRate = this.state.stateRatings.reverse().find(movie => movie.title === adjustedTitle.replace(/\//g, ''));
               let userMovieRating = this.state.userRating.slice().reverse().find(item => item && item.title && movieToRate !== undefined ? item.title === movieToRate.title && movieToRate.rating : null);
@@ -190,7 +189,7 @@ class CenterList extends Component {
                   <div className="title">
                     {adjustedTitle}
                   </div>
-                  <img src={movie.Poster !== 'N/A' ? movie.Poster : noPoster} alt="" />
+                  <img src={movie.poster !== 'N/A' ? movie.poster : noPoster} alt="" />
                   {user.email && userMovies.length >= 1 ?
                     !movieToRate && realVal ? (
                       <div className="rating">
@@ -241,18 +240,10 @@ class CenterList extends Component {
             }
             ) : null}
           </MovieRow>
-          {this.props.moviesLoading ? (<Spinner />) : (
-            <Waypoint
-              onEnter={this.updatePage}
-            >
-              {/* <div>Hey</div> */}
-            </Waypoint>
-          )}
         </div>
-
       </Container >
     )
   }
 }
 
-export default CenterList;
+export default TopRated;

@@ -49,6 +49,8 @@ export const setUserRatings = userMovies => ({
 
 export const getMovies = (searchTerm, page = 1, loading) => {
   return dispatch => {
+    const clear = []
+    dispatch(setMoviesList(clear));
     dispatch(setMoviesLoading(true));
     //DEFAULT SETS PAGE TO BATMAN
     fetch(`https://www.omdbapi.com/?s=${searchTerm ? searchTerm : 'godzilla'}&page=${page}&type=movie&apikey=4ee98d70`)
@@ -75,13 +77,36 @@ export const getMovies = (searchTerm, page = 1, loading) => {
   };
 }
 
+
+export const getTopRated = () => {
+  return dispatch => {
+    console.log('fetching top rated')
+    const clear = []
+    dispatch(setMoviesList(clear));
+    dispatch(setMoviesLoading(true));
+    var allMovies = db.collection("movies").orderBy("rating").where("rating", ">=", 1).limit(20);
+    allMovies.get().then(function (doc) {
+      let movies = [];
+      doc.docs.forEach((doc) => {
+        return movies.push(doc.data());
+      });
+      return movies;
+    }).then((movies) => {
+      console.log(movies)
+      dispatch(setMoviesList(movies));
+      dispatch(getRating(movies));
+      dispatch(setMoviesLoading(false))
+    })
+  };
+}
+
 export const getRating = movieList => {
   return dispatch => {
     dispatch(setMoviesLoading(true));
     //get currentRating
     let movieListToSend = [];
     const movieMap = movieList.map(movie => {
-      const adjustedTitle = movie.Title + ' ' + movie.Year;
+      const adjustedTitle = movie.title || movie.Title + ' ' + movie.Year;
       let movieTitle = adjustedTitle.replace(/\//g, '');
       var movies = db.collection("movies").doc(`${movieTitle}`);
       movies.get().then(function (doc) {
@@ -90,7 +115,7 @@ export const getRating = movieList => {
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
-          db.collection("movies").doc(`${movieTitle}`).set({ title: adjustedTitle, rating: 0 });
+          db.collection("movies").doc(`${movieTitle}`).set({ title: adjustedTitle, rating: 0, poster: movie.Poster });
           return movieListToSend.push({ title: adjustedTitle, rating: 0 });
         }
       }).then(() => {

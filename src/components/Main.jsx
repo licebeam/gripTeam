@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import GenreList from './GenreList'
 import CenterList from './CenterList';
+import TopRated from './TopRated';
 import User from './User';
 import Login from './Login';
 import Header from './Header';
@@ -64,6 +65,7 @@ class Main extends Component {
       setUserRatings,
       userMovies,
       logInSet,
+      getTopRated,
     } = this.props
     return (
       < Router>
@@ -85,6 +87,23 @@ class Main extends Component {
                 setUserRatings={setUserRatings}
                 movieList={movieList}
                 getMovies={getMovies}
+                updateRating={updateRating}
+                getRating={getRating}
+                currentRatings={currentRatings}
+                moviesLoading={moviesLoading}
+                searchTerm={this.state.searchTerm}
+                logInSet={logInSet} //check for page mount reset loaded user
+              />
+            </Middle>
+          } />
+          <Route exact path="/Top" render={() =>
+            <Middle >
+              <TopRated
+                user={user}
+                userMovies={userMovies}
+                setUserRatings={setUserRatings}
+                movieList={movieList}
+                getTopRated={getTopRated}
                 updateRating={updateRating}
                 getRating={getRating}
                 currentRatings={currentRatings}
