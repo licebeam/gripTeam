@@ -6,61 +6,78 @@ import { Link } from 'react-router-dom'
 const HeaderContainer = styled.div`
   flex:1;
   width: 100%;
-  background-color: #323232; 
-  text-align: center;
+  background-color: black; 
   margin: 0 auto;
   display: flex;
   border-bottom: 6px solid #c79843;
 `
 const SearchBar = styled.div`
    @media (max-width: 700px) { 
-     height: 80px; 
+    flex: 1;
   }
   flex: 1;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
   padding: 20px;
   .navigation{
+    @media (max-width: 700px) {  
+     flex: 8;
+    }
+    flex: 8;
     .link{
         /* this is a mobile friendly media query  */
   /* if the screen is less the 700px wide it will inherit this style */
    @media (max-width: 700px) {  
      font-size: .8rem;
   }
-      flex: 1;
       font-size: 1.4rem;
       margin-right: 20px;
     }
   }
-  .eval-logo{
-    flex: 3;
-    width: 100%;
-    height: 100%;
-    content: url('https://imgur.com/CAVcTE8');
-  }
   .user-icon{
-    flex: 1;
-    .login{
-     flex: 1;
-     font-size: 1.4rem;
-    }
+    display: flex;
+        align-items: center;
+    vertical-align: middle;
+    flex: 2;
+        margin-right: 20px;
+  }
+  .login{
+    font-size: 1.4rem;
   }
   input{
-    margin-left: auto;
-    width: 200px;
+    flex: 1;
+    @media (max-width: 700px) {  
+    height: 20px;
+    flex: 1;
+    font-size: 1rem;
+  }
+    border-radius: 18px;
+    padding: 8px;
     border: none;
     height: 30px;
     font-size: 1.2rem;
+    &:focus {
+    outline: none;
+}
   }
   .user-profile-photo{
-     @media (max-width: 700px) {  
-      height: 30px;
-     width: 30px; 
-  }
+    @media (max-width: 700px) {  
+    height: 30px;
+    width: 30px;  
+    }
+    align-items: center;
+    vertical-align: middle;
     height: 50px;
     width: 50px;   
     display: flex;
     color: white;
+    span{
+      @media (max-width: 700px) {  
+     font-size: .8rem;
+    }
+      margin-left: 20px
+    }
     img{
       height: 100%;
       height: 100%;
@@ -78,20 +95,20 @@ class Header extends Component {
         <SearchBar>
           <div className="navigation">
             <Link className="link" to="/Home">Home</Link>
-            <Link className="link" to="/Top">Top Movies</Link>
+            <Link className="link" to="/Top">Top</Link>
           </div>
-          <div className="eval-logo">EVAL</div>
           <div className="user-icon">
             {user && user.profilePhoto ? (
               <div className="user-profile-photo">
                 <img src={user.profilePhoto} alt="" />
-                <span>{user.displayName}</span>
               </div>
-            ) : (
-                <a className="login" href="Login">Login</a>
-              )
+            ) : null
             }
           </div>
+          {!user && !user.profilePhoto ? (
+            <Link className="login" to="/Login">Log In</Link>
+          ) : null
+          }
           <input type="text"
             placeholder='Search'
             onChange={(e) =>

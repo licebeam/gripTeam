@@ -36,7 +36,7 @@ const Container = styled.div`
 `
 const MovieRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   /* this is a mobile friendly media query  */
   /* if the screen is less the 700px wide it will inherit this style */
    @media (max-width: 700px) {  
