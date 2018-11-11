@@ -57,7 +57,7 @@ const SearchBar = styled.div`
   }
   .login{
      @media (max-width: 700px) {  
-     font-size: .8rem;
+     font-size: .6rem;
   }
     font-size: 1rem;
     text-align: center;
