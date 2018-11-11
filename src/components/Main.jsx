@@ -7,8 +7,8 @@ import TopRated from './TopRated';
 import User from './User';
 import Login from './Login';
 import Header from './Header';
-import { BrowserRouter as Router, Route, Link, location } from "react-router-dom";
-import { withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, } from "react-router-dom";
+
 const Container = styled.div`
   background-color: black;
   height: 100vh;

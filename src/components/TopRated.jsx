@@ -5,7 +5,7 @@ import noPoster from '../images/noposter.png';
 import { Loader } from 'styled-icons/feather/Loader'
 import { ThumbsUp } from 'styled-icons/fa-regular/ThumbsUp'
 import { ThumbsDown } from 'styled-icons/fa-regular';
-
+import { SelfBuildingSquareSpinner } from 'react-epic-spinners'
 
 const UpVote = styled(ThumbsUp)`
   color: whitesmoke;
@@ -13,13 +13,7 @@ const UpVote = styled(ThumbsUp)`
 const DownVote = styled(ThumbsDown)`
   color: whitesmoke;
 `
-const Spinner = styled(Loader)`
-  color: whitesmoke;
-  height: 20px;
-  width: 60px;
-  margin: 10px;
-  text-align: center;
-`
+
 const Container = styled.div`
   background-color: black;
   height: 100%;
@@ -30,8 +24,19 @@ const Container = styled.div`
   flex-direction: column;
   overflow: auto;
   .loading{
-    text-align:
-    font-size: 3rem;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    justify-content: center;
+    background-color: black;
+    opacity: 0.8;
+    z-index: 10;
+    .spin{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 `
 const MovieRow = styled.div`
@@ -68,6 +73,7 @@ const Movie = styled.div`
     font-size: 1rem;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     .current-rating{
       flex:1;
       height: 20px;
@@ -163,7 +169,7 @@ class TopRated extends Component {
     console.log(this.props.moviesLoading)
     return (
       < Container >
-        {/* {!this.props.moviesLoading && userMovies ? null : (<div className='loading'><Spinner /></div>)} */}
+        {!this.props.moviesLoading ? null : (<div className='loading'><div className="spin"><SelfBuildingSquareSpinner /></div></div>)}
         <div className="test">
           <MovieRow>
             {userMovies && movieList && movieList.length ? movieList.map(movie => {
@@ -184,19 +190,9 @@ class TopRated extends Component {
                   {user.email && userMovies.length >= 1 ?
                     !movieToRate && realVal ? (
                       <div className="rating">
-                        <div className="up"
-                          onClick={() => {
-                            updateRating(adjustedTitle, 1, user, 'up');
-                            setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                            this.updateObjectInArray(this.state.stateRatings,
-                              { rating: movieRating.rating += 1, title: adjustedTitle, type: 'up', });
-                          }}><UpVote /></div>
-                        <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
-                        <div className="down" onClick={() => {
-                          updateRating(adjustedTitle, -1, user, 'down');
-                          this.updateObjectInArray(this.state.stateRatings, { rating: movieRating.rating -= 1, title: adjustedTitle, type: 'down', });
-                          setUserRatings([adjustedTitle.replace(/\//g, '')]);
-                        }}><DownVote /></div>
+                        <div className="rating">
+                          <SelfBuildingSquareSpinner />
+                        </div>
                       </div>
                     ) : (
                         !this.props.moviesLoading ? (
@@ -220,7 +216,7 @@ class TopRated extends Component {
                             ) : null}
                           </div>
                         )
-                          : (<div className="rating"><Spinner /></div>)
+                          : (<div className="rating"><SelfBuildingSquareSpinner /></div>)
                       )
                     : (<div className="rating">
                       <span className="current-rating">{movieRating && this.state.stateRatings.length ? this.state.stateRatings.find(item => item.title === adjustedTitle).rating : 0}</span>
