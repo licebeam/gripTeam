@@ -93,8 +93,10 @@ export const getTopRated = () => {
       return movies;
     }).then((movies) => {
       console.log(movies)
-      dispatch(setMoviesList(movies));
-      dispatch(getRating(movies));
+      let sorted = movies.sort((a, b) => a.rating - b.rating);
+      sorted = sorted.reverse()
+      dispatch(setMoviesList(sorted));
+      dispatch(getRating(sorted));
       dispatch(setMoviesLoading(false))
     })
   };
