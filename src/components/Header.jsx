@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom'
 import { Loader } from 'styled-icons/feather/Loader'
 import { User } from 'styled-icons/fa-solid/User'
+import { withRouter } from 'react-router-dom'
 
 
 const LoginIcon = styled(User)`
@@ -130,6 +131,7 @@ class Header extends Component {
             }
             onKeyPress={e => {
               if (e.key === 'Enter') {
+                this.props.history.push('/Home')
                 resetMovieRatingList();
                 this.props.getMovies(this.props.searchTerm);
               }
@@ -141,4 +143,4 @@ class Header extends Component {
   }
 }
 
-export default Header
+export default withRouter(Header)

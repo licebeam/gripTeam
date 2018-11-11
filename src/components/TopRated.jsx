@@ -133,15 +133,6 @@ class TopRated extends Component {
     }
   }
 
-  // updatePage = () => {
-  //   if (!this.props.moviesLoading) {
-  //     if (this.state.currentPage !== 1) {
-  //       this.props.getMovies(this.props.searchTerm, this.state.currentPage);
-  //     }
-  //     this.setState({ currentPage: this.state.currentPage + 1 })
-  //   }
-  // }
-
   updateObjectInArray = (array, movieToUpdate) => {
     console.log('testing ', movieToUpdate)
     this.setState({
