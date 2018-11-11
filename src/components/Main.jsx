@@ -5,8 +5,8 @@ import CenterList from './CenterList';
 import User from './User';
 import Login from './Login';
 import Header from './Header';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Link, location } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 const Container = styled.div`
   background-color: black;
   height: 100vh;
@@ -40,7 +40,7 @@ class Main extends Component {
   componentDidMount() {
     // TODO FIX LOGIN BUG
     if (this.props.user.email === null) {
-      this.props.logInSet()
+      this.props.logInSet();
     }
   }
 
@@ -63,6 +63,7 @@ class Main extends Component {
       resetMovieRatingList,
       setUserRatings,
       userMovies,
+      logInSet,
     } = this.props
     return (
       < Router>
@@ -89,6 +90,7 @@ class Main extends Component {
                 currentRatings={currentRatings}
                 moviesLoading={moviesLoading}
                 searchTerm={this.state.searchTerm}
+                logInSet={logInSet} //check for page mount reset loaded user
               />
             </Middle>
           } />

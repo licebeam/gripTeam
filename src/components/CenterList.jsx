@@ -116,6 +116,7 @@ class CenterList extends Component {
     }
     if (!this.state.stateRatings.length && this.props.currentRatings.length) {
       this.setState({ stateRatings: this.props.currentRatings })
+      this.props.logInSet()//resets user;
       console.log('current', this.props.currentRatings)
     }
   }
@@ -179,6 +180,7 @@ class CenterList extends Component {
               let realVal = userMovieRating !== undefined ? userMovieRating : { rating: undefined }
               const checkRatingUp = realVal.rating === 'down' && realVal.rating !== 'up' || realVal.rating === undefined;
               const checkRatingDown = realVal.rating === 'up' && realVal.rating !== 'down' || realVal.rating === undefined;
+              console.log(this.props.userRating)
               return (
                 <Movie key={movieList.indexOf(movie)}>
                   <div className="title">
